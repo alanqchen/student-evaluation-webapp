@@ -20,9 +20,27 @@ Then to setup the project:
 
 To run locally, use `docker compose up`. Add the `-d` flag to detach from docker-compse after starting the containers (though for development its recommended to open a second terminal tab/window instead).
 
+Once the bundles are installed and the rails server is ready, you should see something similar to
+
+```bash
+evaluate_me-web-1  | => Booting Puma
+evaluate_me-web-1  | => Rails 7.0.2.3 application starting in development 
+evaluate_me-web-1  | => Run `bin/rails server --help` for more startup options
+evaluate_me-web-1  | Puma starting in single mode...
+evaluate_me-web-1  | * Puma version: 5.6.4 (ruby 3.0.3-p157) ("Birdie's Version")
+evaluate_me-web-1  | *  Min threads: 5
+evaluate_me-web-1  | *  Max threads: 5
+evaluate_me-web-1  | *  Environment: development
+evaluate_me-web-1  | *          PID: 1
+evaluate_me-web-1  | * Listening on http://0.0.0.0:3000
+evaluate_me-web-1  | Use Ctrl-C to stop
+```
+
+Then you can view `http://0.0.0.0:3000` in a browser.
+
 ### Running Rails Commands
 
-When the app is already running with `docker compose up`, attach to the container:
+When the app is already running with `docker compose up`, attach to the container (it can take a couple seconds to run):
 
 ```bash
 docker compose exec web bin/rails <command>
@@ -42,12 +60,20 @@ To access the rails console when the app is running, use to following:
 docker compose exec web bin/rails console
 ```
 
-### Running Tests
+#### Example Updating Gemfile
 
-Use rake to run all tests:
+If you change the Gemfile, you can then install the new dependencies using
 
 ```bash
-docker compose run --rm web bin/rake test
+docker compose run --rm web bin/bundle install
+```
+
+### Running Tests
+
+Use RSpec to run all tests:
+
+```bash
+docker compose run --rm web bin/rspec
 ```
 
 ### Production
