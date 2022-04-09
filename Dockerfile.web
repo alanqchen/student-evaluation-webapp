@@ -8,7 +8,10 @@ RUN apt-get update -qq && apt-get install -yq --no-install-recommends \
     git \
     libpq-dev \
     postgresql-client \
-  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+  && apt-get clean \
+  && rm -rf /var/cache/apt/archives/* \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+  && truncate -s 0 /var/log/*log
 
 ENV LANG=C.UTF-8 \
   BUNDLE_JOBS=4 \
@@ -26,9 +29,9 @@ COPY Gemfile.lock /eval-webapp/Gemfile.lock
 RUN bundle install
 COPY . /eval-webapp
 
-COPY entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
+COPY entrypoint.web.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.web.sh
+ENTRYPOINT ["entrypoint.web.sh"]
 
 EXPOSE 3000
 

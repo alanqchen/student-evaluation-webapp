@@ -20,7 +20,6 @@ WORKDIR /eval-webapp
 
 COPY Gemfile //Gemfile
 COPY Gemfile.lock /eval-webapp/Gemfile.lock
-RUN bundle install
 COPY . /eval-webapp
 
 COPY entrypoint.sh /usr/bin/

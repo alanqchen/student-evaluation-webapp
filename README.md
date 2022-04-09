@@ -16,11 +16,39 @@ Then to setup the project:
 2. Run `docker compose build`
 3. Run `docker compose run --rm web bin/rails db:setup`
 
-## Running
+## Development
 
-### Development
+To run locally, use `docker compose up`. Add the `-d` flag to detach from docker-compse after starting the containers (though for development its recommended to open a second terminal tab/window instead).
 
-To run locally, use `docker compose up`. Add the `-d` flag to detach from docker-compse after starting the containers.
+### Running Rails Commands
+
+When the app is already running with `docker compose up`, attach to the container:
+
+```bash
+docker compose exec web bin/rails <command>
+```
+
+If no container is running yet:
+
+```bash
+docker compose run --rm web bin/rails <command>
+```
+
+#### Example Running Rails Console
+
+To access the rails console when the app is running, use to following:
+
+```bash
+docker compose exec web bin/rails console
+```
+
+### Running Tests
+
+Use rake to run all tests:
+
+```bash
+docker compose run --rm web bin/rake test
+```
 
 ### Production
 
