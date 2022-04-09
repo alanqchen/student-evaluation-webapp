@@ -76,6 +76,14 @@ Use RSpec to run all tests:
 docker compose run --rm web bin/rspec
 ```
 
+### Running Rubocop
+
+Use the `--auto-correct` flag to fix automatically fix supported offenses.
+
+```bash
+docker compose exec web bin/bundle exec rubocop --parallel --auto-correct
+```
+
 ### Production
 
 1. `heroku container:push web --recursive`
