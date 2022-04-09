@@ -4,35 +4,23 @@ Website evaluation tool.
 
 ## Local Setup
 
-If there's any errors that show up at any step, do not continue and send a message in Discord.
+To help simplify the development setup and workflow, we'll use Docker and Docker Compose.
 
-1. Ensure you have the following:
-   - Ruby 3.0.3
-     - `rbenv install 3.0.3 && rbenv global 3.0.3`
-   - Rails 7.0.2
-     - Update rails using `gem install rails --no-document`
-   - Postgres
-     - MacOS:
-       1. `brew install postgresql`
-       2. Start Postgres using `brew services start postgresql`
-     - Ubuntu:
-       1. `sudo apt update && sudo apt upgrade`
-       2. `sudo apt install postgresql postgresql-contrib libpq-dev`
-       3. Check that installation was successful using `postgres -V`
-       4. `sudo -u postgres createuser -d <ubuntu user name> -P`
-            - Enter a password when prompted, and make sure to record it some place
-            - This creates a PostgreSQL user role with permission to create databases
-       5. Make a new copy of `.env.sample` called `.env`
-       6. Edit the values of `DATABASE_USERNAME` and `DATABASE_PASSWORD` in `.env` to match the credientials of your PostgreSQL user
+For Ubuntu:
+1. [Follow steps 1 and 2 to install Docker](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04)
+2. [Follow step 1 to install Docker Compose](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04)
+3. Ensure `docker-compose version` works
 
-2. Then run `bundle install` in the project directory - if there's any errors that show up, send a message in Discord.
-3. Next run `./bin/rails db:create` to create the local database
+Then to setup the project:
+1. Run `cp .env.example .env` and change the password in `.env`
+2. Run `docker compose build`
+3. Run `docker compose run --rm web bin/rails db:setup`
 
 ## Running
 
 ### Development
 
-Run `./bin/dev`
+To run locally, use `docker compose up`. Add the `-d` flag to detach from docker-compse after starting the containers.
 
 ### Production
 
