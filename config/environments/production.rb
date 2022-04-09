@@ -5,7 +5,7 @@ Rails.application.configure do
 
   # Production hostnames
   config.hosts << "evalme-test1.herokuapp.com"
-  config.hosts << "evaluate.me.herokuapp.com"
+  config.hosts << "evaluate-me-prod.herokuapp.com"
 
   # Code is not reloaded between requests.
   config.cache_classes = true
