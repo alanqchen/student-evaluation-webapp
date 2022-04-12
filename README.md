@@ -7,11 +7,13 @@ Website evaluation tool.
 To help simplify the development setup and workflow, we'll use Docker and Docker Compose.
 
 For Ubuntu:
+
 1. [Follow steps 1 and 2 to install Docker](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04)
 2. [Follow step 1 to install Docker Compose](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04)
 3. Ensure `docker compose version` works
 
 Then to setup the project:
+
 1. Run `cp .env.example .env` and change the password in `.env`
 2. Run `docker compose build`
 3. Run `docker compose run --rm web bin/rails db:setup`
@@ -37,6 +39,14 @@ evaluate_me-web-1  | Use Ctrl-C to stop
 ```
 
 Then you can view `http://0.0.0.0:3000` in a browser.
+
+### Frontend Development
+
+If making changes to the frontend, you'll also need to run Tailwind in watch mode so that changes are reflected in the generated CSS output:
+
+```bash
+docker compose exec web bin/rails tailwindcss:watch
+```
 
 ### Running Rails Commands
 
@@ -88,3 +98,8 @@ docker compose exec web bin/bundle exec rubocop --parallel --auto-correct
 
 1. `heroku container:push web --recursive`
 2. `heroku container:release web`
+
+Note for Heroku, you also need to set `SECRET_KEY_BASE`.
+
+1. Generate a secrete key using `rake secret`
+2. Run `heroku config:set --app=<app name> SECRET_KEY_BASE='generate key'`
