@@ -16,15 +16,9 @@ ENV LANG=C.UTF-8 \
   
 RUN gem update --system && gem install bundler
 
-WORKDIR /eval-webapp
+WORKDIR /usr/src/app
 
-COPY Gemfile //Gemfile
-COPY Gemfile.lock /eval-webapp/Gemfile.lock
-COPY . /eval-webapp
-
-COPY entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["./entrypoint.sh"]
 
 EXPOSE 3000
 
