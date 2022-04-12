@@ -40,6 +40,14 @@ evaluate_me-web-1  | Use Ctrl-C to stop
 
 Then you can view `http://0.0.0.0:3000` in a browser.
 
+### Frontend Development
+
+If making changes to the frontend, you'll also need to run Tailwind in watch mode so that changes are reflected in the generated CSS output:
+
+```bash
+docker compose exec web bin/rails tailwindcss:watch
+```
+
 ### Running Rails Commands
 
 When the app is already running with `docker compose up`, attach to the container (it can take a couple seconds to run):
