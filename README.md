@@ -15,8 +15,9 @@ For Ubuntu:
 Then to setup the project:
 
 1. Run `cp .env.sample .env` and change the password in `.env`
-2. Run `docker compose build`
-3. Run `docker compose run --rm web bin/rails db:setup`
+   - After step 2, also run `newgrp docker`, and then run `docker run hello-world` to test that it works
+3. Run `docker compose build`
+4. Run `docker compose run --rm web bin/rails db:setup`
 
 ## Development
 
