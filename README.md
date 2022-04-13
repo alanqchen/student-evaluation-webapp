@@ -107,3 +107,4 @@ Note for Heroku, you also need to set `SECRET_KEY_BASE`.
 ## References
 
 - [Docker Configuration](https://evilmartians.com/chronicles/ruby-on-whales-docker-for-ruby-rails-development)
+- [`.gitignore`](https://raw.githubusercontent.com/ryanwi/rails7-on-docker/main/.gitignore)
