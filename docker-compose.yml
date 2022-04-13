@@ -3,8 +3,11 @@ services:
     build: .
     command: bash -c "rm -f tmp/pids/server.pid && bin/rails s -p 3000 -b '0.0.0.0'"
     volumes:
-      - .:/usr/src/app
+      - .:/app:cached
       - bundle:/usr/local/bundle
+      - history:/usr/local/hist
+      - rails_cache:/app/tmp/cache
+      - assets_builds:/app/assets/builds
     ports:
       - "3000:3000"
     env_file:
@@ -24,5 +27,8 @@ services:
       - pg_data:/var/lib/postgresql/data
 
 volumes:
-  pg_data:
   bundle:
+  history:
+  rails_cache:
+  assets_builds:
+  pg_data:
