@@ -30,6 +30,8 @@ COPY Gemfile.lock /eval-webapp/Gemfile.lock
 RUN bundle install
 COPY . /eval-webapp
 
+RUN bundle exec rake assets:precompile
+
 COPY entrypoint.web.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.web.sh
 ENTRYPOINT ["entrypoint.web.sh"]

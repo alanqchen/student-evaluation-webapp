@@ -75,7 +75,7 @@ To access the rails console when the app is running, use to following:
 docker compose exec web bin/rails console
 ```
 
-#### Example Reseting Database
+#### Example Resetting Database
 
 The following will remove all data from the database and rerun the migrations:
 
