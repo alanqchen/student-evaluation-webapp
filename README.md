@@ -6,15 +6,16 @@ Website evaluation tool.
 
 To help simplify the development setup and workflow, we'll use Docker and Docker Compose.
 
-For Ubuntu:
+For Ubuntu x86-64 Systems:
 
 1. [Follow steps 1 and 2 to install Docker](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04)
+   - **After step 2, also run `newgrp docker`, and then run `docker run hello-world` to test that it works**
 2. [Follow step 1 to install Docker Compose](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-20-04)
 3. Ensure `docker compose version` works
 
 Then to setup the project:
 
-1. Run `cp .env.example .env` and change the password in `.env`
+1. Run `cp .env.sample .env` and change the password in `.env`
 2. Run `docker compose build`
 3. Run `docker compose run --rm web bin/rails db:setup`
 
@@ -50,6 +51,8 @@ docker compose exec web bin/rails tailwindcss:watch
 
 ### Running Rails Commands
 
+All rails commands work the same as not using docker at all, but you must prepend one of the docker commands shown below to run them:
+
 When the app is already running with `docker compose up`, attach to the container (it can take a couple seconds to run):
 
 ```bash
@@ -62,6 +65,8 @@ If no container is running yet:
 docker compose run --rm web bin/rails <command>
 ```
 
+Generally, you'll use `run --rm` to run the tests and rubocop locally, and `exec` in most other cases.
+
 #### Example Running Rails Console
 
 To access the rails console when the app is running, use to following:
@@ -70,12 +75,12 @@ To access the rails console when the app is running, use to following:
 docker compose exec web bin/rails console
 ```
 
-#### Example Updating Gemfile
+#### Example Reseting Database
 
-If you change the Gemfile, you can then install the new dependencies using
+The following will remove all data from the database and rerun the migrations:
 
 ```bash
-docker compose run --rm web bin/bundle install
+docker compose exec web bin/rails db:drop db:create db:migrate 
 ```
 
 ### Running Tests
@@ -91,7 +96,7 @@ docker compose run --rm web bin/rspec
 Use the `--auto-correct` flag to fix automatically fix supported offenses.
 
 ```bash
-docker compose exec web bin/bundle exec rubocop --parallel --auto-correct
+docker compose run --rm web bin/bundle exec rubocop --parallel --auto-correct
 ```
 
 ### Production
@@ -107,4 +112,4 @@ Note for Heroku, you also need to set `SECRET_KEY_BASE`.
 ## References
 
 - [Docker Configuration](https://evilmartians.com/chronicles/ruby-on-whales-docker-for-ruby-rails-development)
-- [`.gitignore`](https://raw.githubusercontent.com/ryanwi/rails7-on-docker/main/.gitignore)
+- [General Configuration](https://github.com/ryanwi/rails7-on-docker)
