@@ -22,7 +22,7 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_PASSWORD=${PGPASSWORD}
     volumes:
       - pg_data:/var/lib/postgresql/data
 
