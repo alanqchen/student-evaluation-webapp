@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 ruby:3.0.3-slim
+FROM ruby:3.0.3-slim
 
 RUN apt-get update -qq && apt-get install -yq --no-install-recommends \
     build-essential \
@@ -16,7 +16,7 @@ ENV LANG=C.UTF-8 \
   
 RUN gem update --system && gem install bundler
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 ENTRYPOINT ["./entrypoint.sh"]
 
