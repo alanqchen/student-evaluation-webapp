@@ -23,8 +23,9 @@ default: &default
 
 development:
   <<: *default
-  # During development, docker-compose will set the PG environment
-  # variables from the .env file, which rails then uses as default
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  host: <%= ENV['DATABASE_HOST'] %>
   database: evaluate_me_development
 
   # The specified database role being used to connect to postgres.
