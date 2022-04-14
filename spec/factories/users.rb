@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :user do
     name { Faker::Internet.username(specifier: 1..100, separators: ['.', '_', '-', ' '].freeze) }
     email { Faker::Internet.safe_email }
-    password { Faker::Internet.password(min_length: 8, max_length: 72, mix_case: true, special_characters: true) }
+    password { Faker::Internet.password(min_length: 4, max_length: 68, mix_case: true, special_characters: true) + 'Aa_1' }
     # workaround to add default trait https://github.com/thoughtbot/factory_bot/issues/528
     password_confirmation { password }
     not_admin

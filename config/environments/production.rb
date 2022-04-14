@@ -7,6 +7,8 @@ Rails.application.configure do
   config.hosts << "evalme-test1.herokuapp.com"
   config.hosts << "evaluate-me-prod.herokuapp.com"
 
+  config.secret_key_base = ENV['SECRET_KEY_BASE']
+
   # Code is not reloaded between requests.
   config.cache_classes = true
 

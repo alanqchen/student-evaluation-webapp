@@ -81,3 +81,5 @@ node_modules/
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+/config/credentials/production.key

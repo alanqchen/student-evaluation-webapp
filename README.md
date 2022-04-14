@@ -84,7 +84,7 @@ docker compose exec web bin/rails console
 The following will remove all data from the database and rerun the migrations:
 
 ```bash
-docker compose exec web bin/rails db:drop db:create db:migrate 
+docker compose exec web bin/rails db:drop db:create db:migrate db:seed
 ```
 
 #### Example Adding NPM Package

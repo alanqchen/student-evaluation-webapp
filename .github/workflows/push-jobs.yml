@@ -97,7 +97,7 @@ jobs:
       
       - name: 'Rename prod Dockerfile' # Action does not support specifying Dockerfile yet
         run: |
-          mv Dockerfile.web Dockerfile
+          cp Dockerfile.web Dockerfile
 
       - name: Heroku Docker Deploy
         uses: akhileshns/heroku-deploy@v3.12.12
@@ -105,5 +105,15 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "evaluate-me-prod"
           heroku_email: ${{secrets.HEROKU_EMAIL}}
-          usedocker: true
-          docker_heroku_process_type: web
+          justlogin: true
+
+      - name: Login to Heroku Container Registry
+        run: |
+          heroku container:login
+      - name: Build and Push image
+        run: |
+          heroku container:push web --recursive -a evaluate-me-prod
+      - name: Release image
+        run: |
+          heroku container:release web -a evaluate-me-prod
+
