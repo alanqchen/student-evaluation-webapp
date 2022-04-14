@@ -114,10 +114,10 @@ Naming/ClassAndModuleCamelCase:
 #     detect: "find"
 #     find_all: "select"
 
-# Style/MethodCallWithArgsParentheses:
-#   Enabled: true
-#   EnforcedStyle: omit_parentheses
-#   AllowParenthesesInMultilineCall: true
-# Style/MethodDefParentheses:
-#   Enabled: true
-#   EnforcedStyle: require_no_parentheses
+Style/MethodCallWithArgsParentheses:
+  Enabled: true
+  EnforcedStyle: omit_parentheses
+  AllowParenthesesInMultilineCall: true
+Style/MethodDefParentheses:
+  Enabled: true
+  EnforcedStyle: require_no_parentheses

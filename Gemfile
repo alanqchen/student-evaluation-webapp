@@ -61,10 +61,10 @@ gem "rubocop-rails"
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem "factory_bot_rails", "~> 6.2"
+  gem 'faker'
   gem "rspec-rails"
   gem "rubocop-rspec"
-  gem 'faker'
-  gem "factory_bot_rails", "~> 6.2"
 end
 
 group :development do
@@ -81,9 +81,9 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
+  gem "database_cleaner"
   gem "selenium-webdriver"
   gem "webdrivers"
-  gem "database_cleaner"
 end
 
 gem "bcrypt", "~> 3.1"

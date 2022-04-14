@@ -18,7 +18,7 @@ class User < ApplicationRecord
       "must contain at least one symbol" => /(?=.*[[:^alnum:]])/, # At least one symbol
     }
     rules.each do |message, regex|
-      errors.add( :password, message ) unless password.match( regex )
+      errors.add  :password, message  unless password.match  regex
     end
   end
   has_secure_password

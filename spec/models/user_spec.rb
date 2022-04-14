@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   # Test random users can still be added to the db after tests
-  after(:all) do
+  after :all do
     create :user
     create :user, :admin
     create :user, :instructor
@@ -12,18 +12,18 @@ RSpec.describe User, type: :model do
     create :user, :admin, :instructor
     create :user, :admin, :instructor, :approver
   end
-  
-  before(:each) do
-    @user = User.new(name: "Test User", email: "user@test.com", password: "1Hash+salt", password_confirmation: "1Hash+salt", instructor: false, admin: false, approver: false)
+
+  before :each do
+    @user = User.new name: "Test User", email: "user@test.com", password: "1Hash+salt", password_confirmation: "1Hash+salt", instructor: false, admin: false, approver: false
   end
 
   it 'has valid fields' do
-    expect(@user).to be_valid 
+    expect(@user).to be_valid
   end
 
   it 'is not valid with blank name' do
     @user.name = "    "
-    expect(@user).to_not be_valid 
+    expect(@user).to_not be_valid
   end
 
   it 'is not valid with blank email' do
