@@ -15,7 +15,7 @@
 
   <body>
     <%= render partial: "partials/navbar" %>
-    <main class="container mx-auto mt-28 px-5 flex">
+    <main class="container mx-auto mt-28 px-5 flex flex-col justify-center items-center">
       <%= turbo_frame_tag "flash" do %>
         <%= render "partials/flash" %>
       <% end %>

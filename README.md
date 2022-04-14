@@ -118,6 +118,10 @@ docker compose run --rm web bin/bundle exec rubocop --parallel --auto-correct
 1. `heroku container:push web --recursive`
 2. `heroku container:release web`
 
+If it is the first time the database is started, set it up using
+
+1. `heroku run rake db:migrate db:seed`
+
 Note for Heroku, you also need to set `SECRET_KEY_BASE`.
 
 1. Generate a secrete key using `rake secret`
