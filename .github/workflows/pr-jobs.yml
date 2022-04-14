@@ -68,6 +68,9 @@ jobs:
         run: |
           bundle exec rails db:create
           bundle exec rails db:schema:load
+      
+      - name: Factory lint
+        run: bundle exec rake factory_bot:lint
 
       - name: Run tests
         run: bundle exec rake

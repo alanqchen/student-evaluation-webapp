@@ -49,6 +49,10 @@ If making changes to the frontend, you'll also need to run Tailwind in watch mod
 docker compose exec web bin/rails tailwindcss:watch
 ```
 
+### Creating Tests
+
+Since we're using RSpec for tests, all tests should be under the `spec` directory, **not** the `test` directory.
+
 ### Running Rails Commands
 
 All rails commands work the same as not using docker at all, but you must prepend one of the docker commands shown below to run them:
@@ -83,6 +87,16 @@ The following will remove all data from the database and rerun the migrations:
 docker compose exec web bin/rails db:drop db:create db:migrate 
 ```
 
+#### Example Adding NPM Package
+
+Rails 7 allows us to import packages using `importmaps-rails`:
+
+```bash
+docker compose exec web bin/importmap pin <package name>
+```
+
+And use `unpin` to remove a package.
+
 ### Running Tests
 
 Use RSpec to run all tests:
@@ -113,3 +127,4 @@ Note for Heroku, you also need to set `SECRET_KEY_BASE`.
 
 - [Docker Configuration](https://evilmartians.com/chronicles/ruby-on-whales-docker-for-ruby-rails-development)
 - [General Configuration](https://github.com/ryanwi/rails7-on-docker)
+- [FactoryBot](https://semaphoreci.com/community/tutorials/working-effectively-with-data-factories-using-factorygirl)
