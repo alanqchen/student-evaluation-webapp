@@ -128,3 +128,4 @@ Note for Heroku, you also need to set `SECRET_KEY_BASE`.
 - [General Configuration](https://github.com/ryanwi/rails7-on-docker)
 - [FactoryBot](https://semaphoreci.com/community/tutorials/working-effectively-with-data-factories-using-factorygirl)
 - [CSS Wave](https://www.csscodelab.com/water-effect-simple-css-wave-animation/)
+- [Illustration SVGs](shape.so)
