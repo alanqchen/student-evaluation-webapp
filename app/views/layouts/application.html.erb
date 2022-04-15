@@ -7,14 +7,31 @@
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
 
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.1/dist/flowbite.min.css" />
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "theme", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js" defer></script>
+    <% if Rails.env.development? %>
+      <%= javascript_include_tag "hotwire-livereload", defer: true %>
+    <% end %>
   </head>
 
   <body>
-    <%= render "partials/navbar" %>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
+    <%= render partial: "partials/navbar" %>
+    <div class="grid grid-rows-[1fr_200px] h-full">
+      <div class="row-start-1">
+        <main class="container mx-auto mt-28 px-5 flex flex-col justify-center items-center">
+          <%= turbo_frame_tag "flash" do %>
+            <%= render "partials/flash" %>
+          <% end %>
+          <%= yield %>
+        </main>
+        <%= debug(params) if Rails.env.development? %>
+      </div>
+      <div class="row-start-2">
+        <%= render partial: "partials/footer" %>
+      </div>
+    </div>
   </body>
 </html>

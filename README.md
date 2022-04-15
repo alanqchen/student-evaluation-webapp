@@ -18,6 +18,7 @@ Then to setup the project:
 1. Run `cp .env.sample .env` and change the password in `.env`
 2. Run `docker compose build`
 3. Run `docker compose run --rm web bin/rails db:setup`
+4. Run `docker compose run --rm web bin/rails tailwindcss:build`
 
 ## Development
 
@@ -43,11 +44,15 @@ Then you can view `http://0.0.0.0:3000` in a browser.
 
 ### Frontend Development
 
-If making changes to the frontend, you'll also need to run Tailwind in watch mode so that changes are reflected in the generated CSS output:
+If hotwire livereload is disabled or doesn't work, you'll also need to run Tailwind in watch mode so that changes are reflected in the generated CSS output:
 
 ```bash
 docker compose exec web bin/rails tailwindcss:watch
 ```
+
+### Creating Tests
+
+Since we're using RSpec for tests, all tests should be under the `spec` directory, **not** the `test` directory.
 
 ### Running Rails Commands
 
@@ -80,8 +85,18 @@ docker compose exec web bin/rails console
 The following will remove all data from the database and rerun the migrations:
 
 ```bash
-docker compose exec web bin/rails db:drop db:create db:migrate 
+docker compose exec web bin/rails db:drop db:create db:migrate db:seed
 ```
+
+#### Example Adding NPM Package
+
+Rails 7 allows us to import packages using `importmaps-rails`:
+
+```bash
+docker compose exec web bin/importmap pin <package name>
+```
+
+And use `unpin` to remove a package.
 
 ### Running Tests
 
@@ -104,6 +119,10 @@ docker compose run --rm web bin/bundle exec rubocop --parallel --auto-correct
 1. `heroku container:push web --recursive`
 2. `heroku container:release web`
 
+If it is the first time the database is started, set it up using
+
+1. `heroku run rake db:migrate db:seed`
+
 Note for Heroku, you also need to set `SECRET_KEY_BASE`.
 
 1. Generate a secrete key using `rake secret`
@@ -113,3 +132,4 @@ Note for Heroku, you also need to set `SECRET_KEY_BASE`.
 
 - [Docker Configuration](https://evilmartians.com/chronicles/ruby-on-whales-docker-for-ruby-rails-development)
 - [General Configuration](https://github.com/ryanwi/rails7-on-docker)
+- [FactoryBot](https://semaphoreci.com/community/tutorials/working-effectively-with-data-factories-using-factorygirl)

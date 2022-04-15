@@ -30,6 +30,9 @@ COPY Gemfile.lock /eval-webapp/Gemfile.lock
 RUN bundle install
 COPY . /eval-webapp
 
+RUN rm -f config/credentials.yml.enc
+RUN EDITOR='echo "secret_key_base: $(bundle exec rake secret)" >> ' bundle exec rails credentials:edit
+
 RUN bundle exec rake assets:precompile
 
 COPY entrypoint.web.sh /usr/bin/

@@ -1,0 +1,5 @@
+<div id="flash_alert">
+  <% flash.each do |message_type, data| %>
+    <%= render partial: "partials/alert", locals: { type: message_type, title: data[:title], message: data[:message] } %>
+  <% end %>
+</div>
