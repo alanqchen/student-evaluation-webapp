@@ -18,6 +18,7 @@ Then to setup the project:
 1. Run `cp .env.sample .env` and change the password in `.env`
 2. Run `docker compose build`
 3. Run `docker compose run --rm web bin/rails db:setup`
+4. Run `docker compose run --rm web bin/rails tailwindcss:build`
 
 ## Development
 
@@ -43,7 +44,7 @@ Then you can view `http://0.0.0.0:3000` in a browser.
 
 ### Frontend Development
 
-If making changes to the frontend, you'll also need to run Tailwind in watch mode so that changes are reflected in the generated CSS output:
+If hotwire livereload is disabled or doesn't work, you'll also need to run Tailwind in watch mode so that changes are reflected in the generated CSS output:
 
 ```bash
 docker compose exec web bin/rails tailwindcss:watch
