@@ -28,9 +28,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_12_050545) do
   end
 
   create_table "evaluations", force: :cascade do |t|
-    t.bigint "from_user_id", null: false
-    t.bigint "to_user_id", null: false
-    t.bigint "project_id", null: false
+    t.integer "from_user_id", null: false
+    t.integer "to_user_id", null: false
+    t.integer "project_id", null: false
     t.integer "score", null: false
     t.string "comment", null: false
     t.boolean "completed", null: false
@@ -41,7 +41,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_12_050545) do
 
   create_table "projects", force: :cascade do |t|
     t.string "name", null: false
-    t.bigint "course_id", null: false
+    t.bigint "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_projects_on_course_id"
@@ -64,22 +64,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_12_050545) do
   create_table "users", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
-    t.string "password_digest", null: false
     t.boolean "instructor", null: false
-    t.boolean "admin", null: false
-    t.boolean "approver", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
-  add_foreign_key "courses_users", "courses"
-  add_foreign_key "courses_users", "users"
-  add_foreign_key "evaluations", "projects"
-  add_foreign_key "evaluations", "users", column: "from_user_id"
-  add_foreign_key "evaluations", "users", column: "to_user_id"
   add_foreign_key "projects", "courses"
   add_foreign_key "teams", "courses"
-  add_foreign_key "teams_users", "teams"
-  add_foreign_key "teams_users", "users"
 end

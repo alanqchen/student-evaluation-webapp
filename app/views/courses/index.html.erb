@@ -1,0 +1,12 @@
+<p style="color: green"><%= notice %></p>
+
+<h1 class="font-bold text-4xl">Courses</h1>
+
+<div id="courses">
+  <% @courses.each do |course| %>
+    <%= render course %>
+    <p>
+      <%= link_to "Show this course", course %>
+    </p>
+  <% end %>
+</div>
