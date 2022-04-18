@@ -6,7 +6,6 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.1/dist/flowbite.min.css" />
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "theme", "data-turbo-track": "reload" %>
@@ -15,16 +14,14 @@
     <% if Rails.env.development? %>
       <%= javascript_include_tag "hotwire-livereload", defer: true %>
     <% end %>
-    <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
   </head>
 
   <body class="flex flex-col">
-    <%= render partial: "partials/navbar" %>     
+    <%= render partial: "partials/navbar" %>
     <main class="flex flex-col items-center w-full">
       <%= yield %>
     </main>
     <%= debug(params) if Rails.env.development? %>
-    
     <div class="mt-auto">
       <%= render partial: "partials/footer" %>
     </div>

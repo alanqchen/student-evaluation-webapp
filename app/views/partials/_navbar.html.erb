@@ -1,11 +1,36 @@
 <nav class="sticky top-0 z-40 backdrop-blur bg-slate-800 border-gray-200 px-2 sm:px-4 py-2.5">
   <div class="container flex flex-wrap justify-between items-center mx-auto">
-    <a href="/" class="flex items-center">
-        <%= image_tag("logo.svg", class: "block lg:block h-8 w-auto", alt: "Evaluate.me logo") %>
-        <span class="self-center text-xl font-semibold whitespace-nowrap text-white ml-2">Evaluate.Me</span>
-    </a>
-    <div class="flex md:order-2">
-      <%= button_to "Login", login_path, method: :get, type: "button", class: "text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 bg-blue-600 hover:bg-blue-700 focus:ring-blue-800" %>
+    <%= link_to root_path, {"class": "flex items-center"} do %>
+      <%= image_tag("logo.svg", class: "block lg:block h-8 w-auto", alt: "Evaluate.me logo") %>
+      <span class="self-center text-xl font-semibold whitespace-nowrap text-white ml-2">Evaluate.Me</span>
+    <% end %>
+    <div class="flex items-center md:order-2">
+      <% if logged_in? %>
+        <button type="button" class="flex mr-3 h-fit text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" type="button" data-dropdown-toggle="dropdown">
+          <span class="sr-only">Open user menu</span>
+          <%= gravatar_for current_user, class: "w-10 h-10 rounded-full" %>
+        </button>
+        <!-- Dropdown menu -->
+        <div class="hidden z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown">
+          <div class="py-3 px-4">
+            <span class="block text-sm text-gray-900 dark:text-white"><%= current_user.name %></span>
+            <span class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400"><%= current_user.email %></span>
+          </div>
+          <ul class="py-1" aria-labelledby="dropdown">
+            <li>
+              <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
+            </li>
+            <li>
+              <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
+            </li>
+            <li>
+              <%= link_to "Sign Out", logout_path, data: { "turbo-method": :delete }, class: "block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100" %>
+            </li>
+          </ul>
+        </div>
+      <% else %>
+        <%= button_to "Login", login_path, method: :get, type: "button", class: "text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 bg-blue-600 hover:bg-blue-700 focus:ring-blue-800" %>
+      <% end %>
       <button data-collapse-toggle="mobile-menu" type="button" class="inline-flex items-center p-2 text-sm rounded-lg md:hidden focus:outline-none focus:ring-2 text-gray-400 hover:bg-gray-700 focus:ring-gray-600" aria-controls="mobile-menu-4" aria-expanded="false">
         <span class="sr-only">Open main menu</span>
         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
