@@ -7,4 +7,4 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 # default admin user
-admin = User.create name: 'admin', email: 'admin@admin', password: 'Admin_123', password_confirmation: 'Admin_123', admin: true, instructor: false, approver: true
+admin = User.create name: 'admin', email: 'admin@admin', password: 'Admin_123', password_confirmation: 'Admin_123', admin: true, instructor: false, student: false, approver: true

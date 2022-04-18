@@ -11,6 +11,7 @@ RSpec.describe User, type: :model do
     create :user, :admin, :approver
     create :user, :admin, :instructor
     create :user, :admin, :instructor, :approver
+    create :user, :admin, :instructor, :student, :approver
   end
 
   before :each do

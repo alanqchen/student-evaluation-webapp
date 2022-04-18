@@ -5,20 +5,18 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by(email: params[:session][:email].downcase)&.authenticate params[:session][:password]
     if user
-      # TODO
-      # flash.now[:success] = {title: 'Success!', message: ' Redirecting...'}
-      # render turbo_stream: turbo_stream.replace("flash_alert", partial: "partials/flash", locals: { flash: flash })
       log_in user
-      redirect_to root_url
+      params[:session][:remember_me] == '1' ? remember(user) : forget(user)
+      redirect_to user
     else
-      # TODO
       flash.now[:danger] = {title: 'Error!', message: ' Invalid email/password combination'}
       render turbo_stream: turbo_stream.replace("flash_alert", partial: "partials/flash", locals: { flash: flash })
     end
   end
 
   def destroy
-    log_out
+    # only log out if logged in
+    log_out if logged_in?
     redirect_to root_url
   end
 end

@@ -1,5 +1,8 @@
 :root {
   font-family: 'Inter var', Arial, Helvetica, sans-serif;
+  --accents-3: #444;
+  --accents-2: #222;
+  --accents-1: #111;
 }
 
 html {
