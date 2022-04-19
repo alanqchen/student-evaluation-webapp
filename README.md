@@ -125,6 +125,17 @@ Note for Heroku, you also need to set `SECRET_KEY_BASE`.
 1. Generate a secrete key using `rake secret`
 2. Run `heroku config:set --app=<app name> SECRET_KEY_BASE='generate key'`
 
+## Controller Work
+
+- Alan Chen
+  - Users, Account Activation, Dashboards, Sessions, Requests, Static Pages
+- John Calentine
+  - Courses
+- Blake Whitman
+  - TBF
+- Chih-Hua Nieh
+  - TBF
+
 ## References
 
 - [Docker Configuration](https://evilmartians.com/chronicles/ruby-on-whales-docker-for-ruby-rails-development)
