@@ -4,6 +4,7 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.string :name, null: false
       t.string :email, null: false
       t.string :password_digest, null: false
+      t.boolean :student, null: false
       t.boolean :instructor, null: false
       t.boolean :admin, null: false
       t.boolean :approver, null: false

@@ -1,0 +1,28 @@
+<h2>Edit Profile</h2>
+<%= turbo_frame_tag "flash" do %>
+  <%= render "partials/flash" %>
+<% end %>
+<div class="flex flex-col max-w-md w-full items-start min-w-full">
+  <div class="col-md-6 col-md-offset-3 w-full max-w-xl">
+    <%= form_with(url: user_edit_path, scope: :user, local: true, class: 'flex flex-col items-start w-full') do |f| %>
+      <div class="mb-6 w-full">
+        <%= f.label :email, class: 'block mb-2 text-sm font-medium text-gray-900' %>
+        <%= f.email_field :email, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5', placeholder: "john.doe@email.com", value: @current_user.email, required: true %>
+      </div>
+      <div class="mb-6 w-full">
+        <%= f.label :name, class: 'block mb-2 text-sm font-medium text-gray-900' %>
+        <%= f.text_field :name, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5', placeholder: "john.doe@email.com", value: @current_user.name, required: true %>
+      </div>
+      <div class="mb-6 w-full">
+        <%= f.label :password, 'New Password', class: 'block mb-2 text-sm font-medium text-gray-900' %>
+        <%= f.password_field :password, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5', required: false  %>
+      </div>
+      <div class="mb-6 w-full">
+        <%= f.label :password_confirmation, 'Confirm New Password', class: 'block mb-2 text-sm font-medium text-gray-900' %>
+        <%= f.password_field :password_confirmation, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5', required: false  %>
+      </div>
+      <%= f.submit "Save Changes", class: "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center" %>
+    <% end %>
+    <p class="mt-4"><%= link_to "Change profile picture on Gravatar", "https://en.gravatar.com/" %></p>
+  </div>
+</div>
