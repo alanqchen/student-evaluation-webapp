@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_18_014735) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_19_151247) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -49,6 +49,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_18_014735) do
     t.index ["course_id"], name: "index_projects_on_course_id"
   end
 
+  create_table "requests", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "email", null: false
+    t.string "institution", null: false
+    t.string "comments", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_requests_on_email", unique: true
+  end
+
   create_table "teams", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "course_id"
@@ -74,6 +84,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_18_014735) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "remember_digest"
+    t.string "activation_digest"
+    t.boolean "activated", default: false, null: false
+    t.datetime "activated_at"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

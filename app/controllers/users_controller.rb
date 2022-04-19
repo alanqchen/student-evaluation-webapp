@@ -11,7 +11,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new user_params
     if @user.save
-      # TODO
+      @user.send_activation_email
+      flash[:warning] = {title: 'Activation:', message: ' Please check your email to activate your account'}
+      render turbo_stream: turbo_stream.replace("flash_alert", partial: "partials/flash", locals: { flash: flash })
     else
       render 'new'
     end
@@ -48,9 +50,16 @@ class UsersController < ApplicationController
 
       def logged_in_user
         unless logged_in?
+          store_location
           # Displaying flashes with redirect not yet feasible or non-hacky with turbo
           redirect_to login_url
         end
+      end
+
+      # Confirms the correct user
+      def correct_user
+        @user = User.find params[:id]
+        redirect_to root_url unless current_user? @user
       end
 
       def edit_given_user user, params

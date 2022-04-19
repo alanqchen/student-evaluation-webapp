@@ -40,13 +40,13 @@
     <div class="hidden justify-between items-center w-full md:flex md:w-auto md:order-1" id="mobile-menu">
       <ul class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
         <li>
-          <a href="#" class="block py-2 pr-4 pl-3 bg-blue-700 rounded md:bg-transparent md:p-0 text-white" aria-current="page">Home</a>
+          <%= link_to "Home", root_path, class: "block py-2 pr-4 pl-3 border-b md:border-0 md:p-0 md:hover:text-white text-gray-400 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700" %>
         </li>
         <li>
           <a href="#" class="block py-2 pr-4 pl-3 border-b md:border-0 md:p-0 md:hover:text-white text-gray-400 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">About</a>
         </li>
         <li>
-          <a href="#" class="block py-2 pr-4 pl-3 border-b md:border-0 md:p-0 md:hover:text-white text-gray-400 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700">Instructors</a>
+          <%= link_to "Instructors", new_request_path, class: "block py-2 pr-4 pl-3 border-b md:border-0 md:p-0 md:hover:text-white text-gray-400 hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700" %>
         </li>
       </ul>
     </div>

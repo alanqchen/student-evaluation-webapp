@@ -6,10 +6,15 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by(email: params[:session][:email].downcase)&.authenticate params[:session][:password]
-    if user
-      log_in user
-      params[:session][:remember_me] == '1' ? remember(user) : forget(user)
-      redirect_to dashboards_path
+    if user && user.authenticate(params[:session][:password])
+      if user.activated?
+        log_in user
+        params[:session][:remember_me] == '1' ? remember(user) : forget(user)
+        redirect_back_or dashboards_path
+      else
+        flash.now[:danger] = {title: 'Error!', message: " Account not activated. Check your email for an activation link. #{user.activation_token}"}
+        render turbo_stream: turbo_stream.replace("flash_alert", partial: "partials/flash", locals: { flash: flash })
+      end
     else
       flash.now[:danger] = {title: 'Error!', message: ' Invalid email/password combination'}
       render turbo_stream: turbo_stream.replace("flash_alert", partial: "partials/flash", locals: { flash: flash })

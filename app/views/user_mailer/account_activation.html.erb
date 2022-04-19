@@ -1,0 +1,13 @@
+<h1>Evaluate.Me</h1>
+
+<p>Hi <%= @user.name %>,</p>
+
+<p>
+Welcome to the Evaluate.Me! Click on the link below to activate your account:
+</p>
+
+<%= link_to "Activate", edit_account_activation_url(@user.activation_token, email: @user.email) %>
+
+<p>
+Your tempory password is <strong><%= @user.temp_password %></strong>. It's highly recommended to change your password after you login.
+</p>
