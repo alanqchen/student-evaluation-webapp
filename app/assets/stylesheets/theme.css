@@ -3,6 +3,7 @@
   --accents-3: #444;
   --accents-2: #222;
   --accents-1: #111;
+  --accent-blue: #0070f3;
 }
 
 html {
@@ -54,3 +55,8 @@ p {
   line-height: 1.625em;
 }
 
+p > a {
+  color: var(--accent-blue);
+  text-decoration: none;
+  cursor: pointer;
+}

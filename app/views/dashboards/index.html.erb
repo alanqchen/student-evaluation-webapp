@@ -11,6 +11,7 @@
   <div class="w-full mt-4">
     <%= turbo_frame_tag :dashboardContent, "data-navigation-target": "content", class: "w-full" do %>
       <h2>Evaluations</h2>
+       <%= render template: "shared/user_evaluations" %>
     <% end %>
   </div>
   <%= render partial: "partials/loading_indicator" %>
