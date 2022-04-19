@@ -12,6 +12,3 @@ student = User.create name: 'student', email: 'student1@student', password: 'Stu
 student = User.create name: 'student', email: 'student2@student', password: 'Student_1', password_confirmation: 'Student_1', admin: false, instructor: false, student: true, approver: false
 student = User.create name: 'student', email: 'student3@student', password: 'Student_1', password_confirmation: 'Student_1', admin: false, instructor: false, student: true, approver: false
 student = User.create name: 'student', email: 'student4@student', password: 'Student_1', password_confirmation: 'Student_1', admin: false, instructor: false, student: true, approver: false
-
-
-

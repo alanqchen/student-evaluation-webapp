@@ -92,12 +92,12 @@ class UsersController < ApplicationController
           check_attributes << :approver
           update_attributes[:approver] = role_approver
         end
-        
+
         unless check_attributes.empty?
           validate_user = User.new email: params[:user][:email], name: params[:user][:name], password: params[:user][:password], password_confirmation: params[:user][:password_confirmation], instructor: params[:user][:instructor], student: params[:user][:student], approver: params[:user][:approver]
           if validate_user.valid_attributes? *check_attributes
             user.attributes = update_attributes
-            if user.save(validate: false)
+            if user.save validate: false
               flash.now[:success] = {title: 'Success!', message: " Saved changes"}
             else
               flash.now[:danger] = {title: 'Error!', message: ' Failed to save changes'}

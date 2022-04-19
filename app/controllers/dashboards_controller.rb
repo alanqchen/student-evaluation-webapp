@@ -4,7 +4,7 @@ class DashboardsController < ApplicationController
 
   # GET /dashboards or /dashboards.json
   def index
-    
+
   end
 
   def edit

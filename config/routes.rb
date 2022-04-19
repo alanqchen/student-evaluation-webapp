@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   resource :dashboard do
     get :settings, to: 'dashboards#edit'
   end
-  scope(path_names: {}) do
+  scope path_names: {} do
     resources :dashboards, path: 'dashboard'
   end
   resources :users
