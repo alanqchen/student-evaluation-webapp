@@ -9,22 +9,6 @@ Rails.application.configure do
 
   config.secret_key_base = ENV['SECRET_KEY_BASE']
 
-  config.action_mailer.perform_caching = false
-
-  # Ignore bad email addresses and do not raise email delivery errors.
-  # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-  config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.delivery_method = :smtp
-  ActionMailer::Base.smtp_settings = {
-          :address        => 'smtp.sendgrid.net',
-          :port           => '587',
-          :authentication => :plain,
-          :user_name      => ENV['SENDGRID_USERNAME'],
-          :password       => ENV['SENDGRID_PASSWORD'],
-          :domain         => 'heroku.com'
-  }
-  config.action_mailer.default_url_options = { :host => 'evaluate-me-prod.herokuapp.com' }
-
   # Code is not reloaded between requests.
   config.cache_classes = true
 
@@ -32,7 +16,7 @@ Rails.application.configure do
   # your application in memory, allowing both threaded web servers
   # and those relying on copy on write to perform better.
   # Rake tasks automatically ignore this option for performance.
-  config.eager_load = false
+  config.eager_load = true
 
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
@@ -83,6 +67,25 @@ Rails.application.configure do
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "evaluate_me_production"
+
+  config.action_mailer.perform_caching = false
+
+  # Ignore bad email addresses and do not raise email delivery errors.
+  # Set this to true and configure the email server for immediate delivery to raise delivery errors.
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+  host = 'https://evaluate-me-prod.herokuapp.com'
+  config.action_mailer.default_url_options = { host: host }
+  # https://github.com/rails/rails/issues/44161
+  config.action_mailer.smtp_settings = {
+    addres: 'smtp.sendgrid.net',
+    port: 587,
+    authentication: :plain,
+    user_name: ENV['SENDGRID_USERNAME'],
+    password: ENV['SENDGRID_PASSWORD'],
+    domain: 'heroku.com',
+    enable_starttls_auto: true
+  }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
