@@ -40,15 +40,9 @@ evaluate_me-web-1  | * Listening on http://0.0.0.0:3000
 evaluate_me-web-1  | Use Ctrl-C to stop
 ```
 
+Then in another terminal tab/window, run `docker compose exec web bin/rails tailwindcss:watch`, this will rebuild the css automatically as changes are made.
+
 Then you can view `http://0.0.0.0:3000` in a browser.
-
-### Frontend Development
-
-If hotwire livereload is disabled or doesn't work, you'll also need to run Tailwind in watch mode so that changes are reflected in the generated CSS output:
-
-```bash
-docker compose exec web bin/rails tailwindcss:watch
-```
 
 ### Creating Tests
 
@@ -133,3 +127,5 @@ Note for Heroku, you also need to set `SECRET_KEY_BASE`.
 - [Docker Configuration](https://evilmartians.com/chronicles/ruby-on-whales-docker-for-ruby-rails-development)
 - [General Configuration](https://github.com/ryanwi/rails7-on-docker)
 - [FactoryBot](https://semaphoreci.com/community/tutorials/working-effectively-with-data-factories-using-factorygirl)
+- [CSS Wave](https://www.csscodelab.com/water-effect-simple-css-wave-animation/)
+- [Illustration SVGs](shape.so)

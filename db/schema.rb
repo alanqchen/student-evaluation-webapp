@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_12_050545) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_18_014735) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,8 +42,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_12_050545) do
   create_table "projects", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "course_id", null: false
+    t.boolean "closed", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["closed"], name: "index_projects_on_closed"
     t.index ["course_id"], name: "index_projects_on_course_id"
   end
 
@@ -65,11 +67,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_12_050545) do
     t.string "name", null: false
     t.string "email", null: false
     t.string "password_digest", null: false
+    t.boolean "student", null: false
     t.boolean "instructor", null: false
     t.boolean "admin", null: false
     t.boolean "approver", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "remember_digest"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

@@ -7,6 +7,7 @@ FactoryBot.define do
     password_confirmation { password }
     not_admin
     not_instructor
+    not_student
     not_approver
 
     trait :not_admin do
@@ -23,6 +24,14 @@ FactoryBot.define do
 
     trait :instructor do
       instructor { true }
+    end
+
+    trait :not_student do
+      student { false }
+    end
+
+    trait :student do
+      student { true }
     end
 
     trait :not_approver do

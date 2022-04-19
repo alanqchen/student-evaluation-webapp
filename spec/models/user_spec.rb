@@ -11,10 +11,11 @@ RSpec.describe User, type: :model do
     create :user, :admin, :approver
     create :user, :admin, :instructor
     create :user, :admin, :instructor, :approver
+    create :user, :admin, :instructor, :student, :approver
   end
 
   before :each do
-    @user = User.new name: "Test User", email: "user@test.com", password: "1Hash+salt", password_confirmation: "1Hash+salt", instructor: false, admin: false, approver: false
+    @user = User.new name: "Test User", email: "user@test.com", password: "1Hash+salt", password_confirmation: "1Hash+salt", instructor: false, admin: false, student: true, approver: false
   end
 
   it 'has valid fields' do
