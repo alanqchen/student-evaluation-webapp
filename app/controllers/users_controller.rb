@@ -24,7 +24,7 @@ class UsersController < ApplicationController
       end
 
       def logged_in_user
-        unless logged_in? || params[:id] != current_user&.id
+        unless logged_in?
           # Displaying flashes with redirect not yet feasible or non-hacky with turbo
           redirect_to login_url
         end

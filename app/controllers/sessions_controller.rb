@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  before_action :logged_in_user, only: [:new]
+
   def new
   end
 
@@ -7,7 +9,7 @@ class SessionsController < ApplicationController
     if user
       log_in user
       params[:session][:remember_me] == '1' ? remember(user) : forget(user)
-      redirect_to user
+      redirect_to dashboards_path
     else
       flash.now[:danger] = {title: 'Error!', message: ' Invalid email/password combination'}
       render turbo_stream: turbo_stream.replace("flash_alert", partial: "partials/flash", locals: { flash: flash })
@@ -19,4 +21,13 @@ class SessionsController < ApplicationController
     log_out if logged_in?
     redirect_to root_url
   end
+
+  private
+
+      def logged_in_user
+        unless !logged_in?
+          # Displaying flashes with redirect not yet feasible or non-hacky with turbo
+          redirect_to root_path
+        end
+      end
 end
