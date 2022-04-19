@@ -69,9 +69,9 @@ class UsersController < ApplicationController
         changed_email = user.email != params[:user][:email]
         changed_name = user.name != params[:user][:name]
         changed_password = !params[:user][:password].empty? || !params[:user][:password_confirmation].empty?
-        changed_role_instructor = user.instructor != role_instructor
-        changed_role_student = user.student != role_student
-        changed_role_approver = user.approver != role_approver
+        changed_role_instructor = !params[:user][:instructor].nil? && user.instructor != role_instructor
+        changed_role_student = !params[:user][:student].nil? && user.student != role_student
+        changed_role_approver = !params[:user][:approver].nil? && user.approver != role_approver
 
         check_attributes = []
         update_attributes = {}
