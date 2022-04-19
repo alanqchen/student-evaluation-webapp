@@ -130,7 +130,7 @@ Note for Heroku, you also need to set `SECRET_KEY_BASE`.
 - Alan Chen
   - Users, Account Activation, Dashboards, Sessions, Requests, Static Pages
 - John Calentine
-  - Courses
+  - Courses, Projects
 - Blake Whitman
   - TBF
 - Chih-Hua Nieh
