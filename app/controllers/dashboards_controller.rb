@@ -11,7 +11,7 @@ class DashboardsController < ApplicationController
   end
 
   def manage_users
-    render turbo_stream: turbo_stream.replace("dashboardContent", template: "shared/manage_users") 
+    @users = User.all
   end
 
   private

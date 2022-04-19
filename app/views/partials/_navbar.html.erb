@@ -21,7 +21,7 @@
               <%= link_to "Dashboard", dashboards_path, class: "block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100" %>
             </li>
             <li>
-              <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
+              <%= link_to "Settings", dashboard_settings_path, class: "block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100" %>
             </li>
             <li>
               <%= link_to "Sign Out", logout_path, data: { "turbo-method": :delete }, class: "block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100" %>

@@ -10,6 +10,7 @@ class User < ApplicationRecord
   validates :email, presence: true, length: {maximum: 255 }, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: { case_sensitive: false }
   validates :admin, inclusion: { in: [ true, false ] }
   validates :instructor, inclusion: { in: [ true, false ] }
+  validates :student, inclusion: { in: [ true, false ] }
   validates :approver, inclusion: { in: [ true, false ] }
 
   def extra_password_validation
