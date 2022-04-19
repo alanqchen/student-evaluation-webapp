@@ -53,6 +53,7 @@ h5 {
 p {
   font-size: 1em;
   line-height: 1.625em;
+  margin: 1em 0;
 }
 
 p > a {

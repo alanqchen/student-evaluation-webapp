@@ -20,6 +20,11 @@ Rails.application.routes.draw do
   get '/dashboard/settings', to: 'dashboards#edit'
   get '/dashboard/settings_turbo', to: 'dashboards#edit_turbo'
   get '/dashboard/manage_users', to: 'dashboards#manage_users'
+  get '/dashboard/manage_requests', to: 'dashboards#manage_requests'
+  resources :account_activations, only: [:edit]
+  post '/requests/:id', to: 'requests#accept'
+  delete '/requests/:id', to: 'requests#reject'
+  resources :requests, only: [:show, :new, :create]
   resource :dashboard do
     get :settings, to: 'dashboards#edit'
   end

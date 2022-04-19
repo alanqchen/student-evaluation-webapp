@@ -5,6 +5,8 @@ FactoryBot.define do
     password { Faker::Internet.password(min_length: 4, max_length: 68, mix_case: true, special_characters: true) + 'Aa_1' }
     # workaround to add default trait https://github.com/thoughtbot/factory_bot/issues/528
     password_confirmation { password }
+    activated { true }
+    activated_at { Time.zone.now }
     not_admin
     not_instructor
     not_student

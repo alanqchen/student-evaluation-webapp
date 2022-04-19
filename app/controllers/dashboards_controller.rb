@@ -14,6 +14,11 @@ class DashboardsController < ApplicationController
     @users = User.all
   end
 
+  def manage_requests
+    @users = User.all
+    @requests = Request.all
+  end
+
   private
 
       def logged_in_user
