@@ -110,6 +110,9 @@ docker compose run --rm web bin/bundle exec rubocop --parallel --auto-correct
 
 ### Production
 
+The preferred method is to view the [production website hosted on Herkou](evaluate-me-prod.herokuapp.com).
+But, if you prefer to run locally:
+
 1. `heroku container:push web --recursive`
 2. `heroku container:release web`
 
