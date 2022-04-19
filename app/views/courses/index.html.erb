@@ -1,12 +1,23 @@
-<p style="color: green"><%= notice %></p>
+<h1 class="font-bold color white text-4xl">Courses</h1>
 
-<h1 class="font-bold text-4xl">Courses</h1>
+<table class="w-full ">
+  <thead class = "bg-gray-300 text-white">
+    <tr>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody class = "bg-white-400">
+    <tr>
+      <td>John</td>
+    </tr>
+   </tbody>
+</table>
 
 <div id="courses">
   <% @courses.each do |course| %>
     <%= render course %>
     <p>
-      <%= link_to "Show this course", course %>
+      <%= link_to "Show this course", '#' %>
     </p>
   <% end %>
 </div>
