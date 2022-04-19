@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   get 'courses/new'   #Get HTTP request to visit courses/new
   get 'courses/index'
 
+  get 'projects/new'
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
