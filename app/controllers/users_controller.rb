@@ -120,6 +120,10 @@ class UsersController < ApplicationController
 
         unless check_attributes.empty?
           validate_user = User.new email: params[:user][:email], name: params[:user][:name], password: params[:user][:password], password_confirmation: params[:user][:password_confirmation], instructor: params[:user][:instructor], student: params[:user][:student], approver: params[:user][:approver]
+          # Run extra password validation
+          unless !changed_password
+            validate_user.extra_password_validation
+          end
           if validate_user.valid_attributes? *check_attributes
             user.attributes = update_attributes
             if user.save validate: false

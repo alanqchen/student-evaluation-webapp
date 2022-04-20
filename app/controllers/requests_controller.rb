@@ -15,7 +15,7 @@ class RequestsController < ApplicationController
       validate_request = Request.new name: params[:request][:name], email: params[:request][:email], institution: params[:request][:institution], comments: params[:request][:comments]
       if validate_request.valid?
         if validate_request.save validate: false
-          flash.now[:success] = {title: 'Success!', message: " Submitted request"}
+          flash.now[:success] = {title: 'Success!', message: ' Submitted request'}
         else
           flash.now[:danger] = {title: 'Error!', message: ' Failed to submit request, please try again later'}
         end
@@ -28,8 +28,14 @@ class RequestsController < ApplicationController
 
   def reject
     email = Request.find_by(id: params[:id]).email
-    Request.find_by(id: params[:id]).destroy
-    render 'reject', locals: { deleted_email: email }
+    if Request.find_by(id: params[:id])&.destroy
+      render turbo_stream: [
+        turbo_stream.replace("toast", partial: "partials/toast", locals: { type: "success", message: "#{email} has been rejected" }),
+        turbo_stream.update("dashboardTop", template: "dashboards/manage_requests")
+      ]
+    else
+      render turbo_stream: turbo_stream.replace("toast", partial: "partials/toast", locals: { type: "danger", message: "Failed to reject #{email}" })
+    end
   end
 
   def accept
@@ -40,16 +46,24 @@ class RequestsController < ApplicationController
     if new_user.valid?
       if new_user.save
         if new_user.send_activation_email
-          r.destroy
-          render 'accept', locals: { email: r.email }
+          if r.destroy
+            render turbo_stream: [
+              turbo_stream.replace("toast", partial: "partials/toast", locals: { type: "success", message: "#{r.email} has been accepted" }),
+              turbo_stream.update("dashboardTop", template: "dashboards/manage_requests")
+            ]
+          else
+            render turbo_stream: turbo_stream.replace("toast", partial: "partials/toast", locals: { type: "warning", message: "Failed to destroy request for #{r.email}" })
+          end
         else
-          render 'failed_save', locals: { email: r.email }
+          # Need all these else's since renders don't return and we can't have multiple called in a single branch
+          new_user.destroy
+          render turbo_stream: turbo_stream.replace("toast", partial: "partials/toast", locals: { type: "danger", message: "Failed to send email to #{r.email}" })
         end
       else
-        render 'failed_save', locals: { email: r.email }
+        render turbo_stream: turbo_stream.replace("toast", partial: "partials/toast", locals: { type: "danger", message: "#{r.email} was not able to be saved" })
       end
     else
-      render 'failed_save', locals: { email: "#{r.email}: #{new_user.errors.full_messages.to_sentence}:" }
+      render turbo_stream: turbo_stream.replace("toast", partial: "partials/toast", locals: { type: "danger", message: "#{r.email} was not able to be saved" })
     end
   end
 end

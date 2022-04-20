@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'password_resets/new'
+  get 'password_resets/edit'
   get 'evaluations/new'
   get 'evaluations/edit'
   get 'evaluations/submit'
@@ -34,6 +36,7 @@ Rails.application.routes.draw do
   resources :users
   resources :courses
   resources :projects
+  resources :password_resets, only: [:new, :create, :edit, :update]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
