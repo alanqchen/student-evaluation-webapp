@@ -4,10 +4,15 @@ class AccountActivationsController < ApplicationController
     if user && !user.activated? && user.authenticated?(:activation, params[:id])
       user.activate
       log_in user
-      redirect_to user
+      redirect_to dashboards_path
     else
-      flash.now[:danger] = {title: 'Error!', message: ' Invalid activation link'}
-      render turbo_stream: turbo_stream.replace("flash_alert", partial: "partials/flash", locals: { flash: flash })
+      respond_to do |format|
+        format.html { redirect_to login_path }
+        format.turbo_stream { flash.now[:danger] = {title: 'Error!', message: ' Invalid activation link'} }
+      end
+      #flash.now[:danger] = {title: 'Error!', message: ' Invalid activation link'}
+      #redirect_to login_path
+      #render turbo_stream: turbo_stream.replace("flash_alert", partial: "partials/flash", locals: { flash: flash })
     end
   end
 end

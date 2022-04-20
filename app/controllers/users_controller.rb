@@ -24,22 +24,32 @@ class UsersController < ApplicationController
     render 'edit_user', locals: { edit_user: User.find_by(id: params[:id]) }
   end
 
+  # Route to edit the user with the given id
   # Given params[:id]
   def edit_user
     edit_given_user User.find_by(id: params[:id]), params
     render 'edit_user', locals: { edit_user: User.find_by(id: params[:id]) }, status: :unprocessable_entity
   end
 
+  # Route to edit the current user
   def edit
     edit_given_user current_user, params
-    render turbo_stream: turbo_stream.replace("flash_alert", partial: "partials/flash", locals: { flash: flash })
+    render turbo_stream: [
+      turbo_stream.replace("flash_alert", partial: "partials/flash", locals: { flash: flash }),
+      turbo_stream.update("navbarTop", partial: "partials/navbar"),
+      turbo_stream.update("dashboardTop", template: "dashboards/edit_dashboard")
+    ]
   end
 
   # Given params[:id]
   def destroy
     email = User.find_by(id: params[:id]).email
     User.find_by(id: params[:id]).destroy
-    render 'destroy_user', locals: { deleted_email: email }
+    render turbo_stream: [
+      turbo_stream.replace("toast", partial: "partials/toast", locals: { type: "danger", message: "#{email} has been deleted" }),
+      turbo_stream.update("dashboardTop", template: "dashboards/manage_users")
+    ]
+    #render 'destroy_user', locals: { deleted_email: email }
   end
 
     private
@@ -62,10 +72,14 @@ class UsersController < ApplicationController
         redirect_to root_url unless current_user? @user
       end
 
+      # Edits the given user with the given params
       def edit_given_user user, params
+        # Get the roles as set by the given params (if none, will be nil)
         role_instructor = params[:user][:instructor] == '1'
         role_student = params[:user][:student] == '1'
         role_approver = params[:user][:approver] == '1'
+
+        # Check what has been changed
         changed_email = user.email != params[:user][:email]
         changed_name = user.name != params[:user][:name]
         changed_password = !params[:user][:password].empty? || !params[:user][:password_confirmation].empty?
@@ -73,6 +87,8 @@ class UsersController < ApplicationController
         changed_role_student = !params[:user][:student].nil? && user.student != role_student
         changed_role_approver = !params[:user][:approver].nil? && user.approver != role_approver
 
+        # For each changed attribute, add the symbol to a list of attributes to verify
+        # and a hash to store the new values
         check_attributes = []
         update_attributes = {}
         if changed_email

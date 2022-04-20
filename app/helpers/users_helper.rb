@@ -20,4 +20,8 @@ module UsersHelper
     end
     badges.html_safe
   end
+
+  def all_users
+    User.all
+  end
 end

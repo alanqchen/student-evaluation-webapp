@@ -39,9 +39,12 @@ class RequestsController < ApplicationController
     new_user.temp_password = temp_password
     if new_user.valid?
       if new_user.save
-        new_user.send_activation_email
-        r.destroy
-        render 'accept', locals: { email: r.email }
+        if new_user.send_activation_email
+          r.destroy
+          render 'accept', locals: { email: r.email }
+        else
+          render 'failed_save', locals: { email: r.email }
+        end
       else
         render 'failed_save', locals: { email: r.email }
       end

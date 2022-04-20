@@ -1,4 +1,4 @@
-<%= turbo_frame_tag :dashboardContent, class: "w-full" do %>
+<%= render layout: "partials/dashboard", locals: { active: "Manage Requests" } do %>
   <h2>Instructor Account Requests</h2>
   <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
     <div class="p-4">
@@ -28,7 +28,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @requests.each do |r| %>
+        <% all_requests.each do |r| %>
           <tr class="bg-white border-b hover:bg-gray-50 dark:hover:bg-gray-600 w-full">
             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap w-1/5">
                 <%= r.name %>

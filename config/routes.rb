@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   get '/dashboard', to: 'dashboards#index'
   get '/dashboard/settings', to: 'dashboards#edit'
-  get '/dashboard/settings_turbo', to: 'dashboards#edit_turbo'
+  get '/dashboard/settings_turbo', to: 'dashboards#edit_dashboard'
   get '/dashboard/manage_users', to: 'dashboards#manage_users'
   get '/dashboard/manage_requests', to: 'dashboards#manage_requests'
   resources :account_activations, only: [:edit]

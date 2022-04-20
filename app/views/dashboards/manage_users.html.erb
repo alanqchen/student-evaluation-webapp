@@ -1,4 +1,4 @@
-<%= turbo_frame_tag :dashboardContent, class: "w-full" do %>
+<%= render layout: "partials/dashboard", locals: { active: "Manage Users" } do %>
   <h2>Users</h2>
   <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
     <div class="p-4">
@@ -31,7 +31,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @users.each do |u| %>
+        <% all_users.each do |u| %>
           <tr class="bg-white border-b hover:bg-gray-50 dark:hover:bg-gray-600">
             <% if u.admin %>
               <th scope="row" class="px-6 py-4 font-medium text-red-800 whitespace-nowrap w-1/5">
