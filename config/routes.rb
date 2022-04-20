@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'password_resets/new'
+  get 'password_resets/edit'
   get 'evaluations/new'
   get 'evaluations/edit'
   get 'evaluations/submit'
@@ -18,7 +20,7 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   get '/dashboard', to: 'dashboards#index'
   get '/dashboard/settings', to: 'dashboards#edit'
-  get '/dashboard/settings_turbo', to: 'dashboards#edit_turbo'
+  get '/dashboard/settings_turbo', to: 'dashboards#edit_dashboard'
   get '/dashboard/manage_users', to: 'dashboards#manage_users'
   get '/dashboard/manage_requests', to: 'dashboards#manage_requests'
   resources :account_activations, only: [:edit]
@@ -34,6 +36,7 @@ Rails.application.routes.draw do
   resources :users
   resources :courses
   resources :projects
+  resources :password_resets, only: [:new, :create, :edit, :update]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

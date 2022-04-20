@@ -2,20 +2,36 @@
   <%= turbo_frame_tag :dashboardNav, class: "w-full block text-sm font-medium text-center text-gray-500 border-b border-gray-200" do %>
     <ul class="flex flex-wrap -mb-px">
       <li class="mr-2">
-        <%= link_to "Dashboard", dashboard_path, data: {turbo_frame: "dashboardContent",  action: "turbo:click->navigation#displayLoading", navigation_target: "link"}, class: "active text-blue-600 border-blue-600 inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300" %>
+        <% if active == "Courses" %>
+          <%= link_to "Courses", dashboard_path, data: {turbo_frame: "dashboardTop",  action: "turbo:click->navigation#displayLoading", navigation_target: "link"}, class: "active text-blue-600 border-blue-600 inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300" %>
+        <% else %>
+          <%= link_to "Courses", dashboard_path, data: {turbo_frame: "dashboardTop",  action: "turbo:click->navigation#displayLoading", navigation_target: "link"}, class: "inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300" %>
+        <% end %>
       </li>
       <% if current_user.admin %>
         <li class="mr-2">
-          <%= link_to "Manage Users", dashboard_manage_users_path, data: {turbo_frame: "dashboardContent",  action: "turbo:click->navigation#displayLoading", navigation_target: "link"}, class: "inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300" %>
+          <% if active == "Manage Users" %>
+            <%= link_to "Manage Users", dashboard_manage_users_path, data: {turbo_frame: "dashboardContent",  action: "turbo:click->navigation#displayLoading", navigation_target: "link"}, class: "active text-blue-600 border-blue-600 inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300" %>
+          <% else %>
+            <%= link_to "Manage Users", dashboard_manage_users_path, data: {turbo_frame: "dashboardContent",  action: "turbo:click->navigation#displayLoading", navigation_target: "link"}, class: "inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300" %>
+          <% end %>
         </li>
       <% end %>
       <% if current_user.approver %>
         <li class="mr-2">
-          <%= link_to "Manage Requests", dashboard_manage_requests_path, data: {turbo_frame: "dashboardContent",  action: "turbo:click->navigation#displayLoading", navigation_target: "link"}, class: "inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300" %>
+          <% if active == "Manage Requests" %>
+            <%= link_to "Manage Requests", dashboard_manage_requests_path, data: {turbo_frame: "dashboardContent",  action: "turbo:click->navigation#displayLoading", navigation_target: "link"}, class: "active text-blue-600 border-blue-600 inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300" %>
+          <% else %>
+            <%= link_to "Manage Requests", dashboard_manage_requests_path, data: {turbo_frame: "dashboardContent",  action: "turbo:click->navigation#displayLoading", navigation_target: "link"}, class: "inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300" %>
+          <% end %>
         </li>
       <% end %>
       <li class="mr-2">
-        <%= link_to "Settings", dashboard_settings_turbo_path, data: {turbo_frame: "dashboardContent",  action: "turbo:click->navigation#displayLoading", navigation_target: "link"}, class: "inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300" %>
+        <% if active == "Settings" %>
+            <%= link_to "Settings", dashboard_settings_turbo_path, data: {turbo_frame: "dashboardContent",  action: "turbo:click->navigation#displayLoading", navigation_target: "link"}, class: "active text-blue-600 border-blue-600 inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300" %>
+          <% else %>
+            <%= link_to "Settings", dashboard_settings_turbo_path, data: {turbo_frame: "dashboardContent",  action: "turbo:click->navigation#displayLoading", navigation_target: "link"}, class: "inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300" %>
+          <% end %>
       </li>
     </ul>
   <% end %>

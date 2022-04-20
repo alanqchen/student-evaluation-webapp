@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>EvaluateMe</title>
+    <title>Evaluate.Me</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -18,7 +18,9 @@
   </head>
 
   <body class="flex flex-col">
-    <%= render partial: "partials/navbar" %>
+    <%= turbo_frame_tag "navbarTop" do %>
+      <%= render partial: "partials/navbar" %>
+    <% end %>
     <main class="flex flex-col items-center w-full">
       <%= yield %>
     </main>
@@ -29,5 +31,6 @@
       <%= render partial: "partials/footer" %>
     </div>
     <%= javascript_include_tag "flowbite-1.4.1-patched.js", "data-turbolinks-track" => true  %>
+    <%= javascript_include_tag "turbo-drive-nav.js", "data-turbolinks-track" => true  %>
   </body>
 </html>

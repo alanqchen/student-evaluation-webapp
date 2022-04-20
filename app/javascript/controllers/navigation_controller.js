@@ -10,6 +10,7 @@ export default class extends Controller {
     let value = event.detail.url;
 
     this.updateLinks(value);
+    history.pushState(history.state, '', value)
   }
 
   displayContent() {

@@ -20,4 +20,12 @@ module UsersHelper
     end
     badges.html_safe
   end
+
+  def all_users
+    User.all
+  end
+
+  def filter_key_for_user user
+    "#{user.name} #{user.email} #{user.admin ? 'admin' : ''} #{user.instructor ? 'instructor' : ''} #{user.student ? 'student' : ''}  #{user.approver ? 'approver' : ''}".downcase
+  end
 end

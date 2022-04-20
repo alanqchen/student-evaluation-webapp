@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       if user.activated?
         log_in user
         params[:session][:remember_me] == '1' ? remember(user) : forget(user)
-        redirect_back_or dashboards_path
+        redirect_back_or dashboards_path, params
       else
         flash.now[:danger] = {title: 'Error!', message: " Account not activated. Check your email for an activation link. #{user.activation_token}"}
         render turbo_stream: turbo_stream.replace("flash_alert", partial: "partials/flash", locals: { flash: flash })
