@@ -139,6 +139,14 @@ Note for Heroku, you also need to set `SECRET_KEY_BASE`.
 1. Generate a secrete key using `rake secret`
 2. Run `heroku config:set --app=<app name> SECRET_KEY_BASE='generate key'`
 
+#### Heroku Add-ons
+
+- Heroku PostgreSQL
+- Heroku Redis
+- Twilio Sendgrid
+  - Requires API key to be setup and set in the environment (no longer can use basic email + password auth)
+  - Requires custom domain that you controller that can be used to send emails from
+
 ## Work Credit
 
 - Alan Chen
