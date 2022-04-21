@@ -7,7 +7,7 @@ class AccountActivationsController < ApplicationController
       redirect_to dashboards_path
     else
       flash.now[:danger] = {title: 'Error!', message: ' Invalid activation link'}
-      render turbo_stream: turbo_stream.replace("flash_alert", partial: "partials/flash", locals: { flash: flash })
+      redirect_to login_path
     end
   end
 end

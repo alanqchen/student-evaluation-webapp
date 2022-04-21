@@ -44,6 +44,14 @@ Then in another terminal tab/window, run `docker compose exec web bin/rails tail
 
 Then you can view `http://0.0.0.0:3000` in a browser.
 
+### Tailwind
+
+Note that since we use tailwind, most of the CSS styling is inline with the `.erb` files rather than in seperate CSS files. This is by design since tailwind uses utility-classes, and makes it so you don't have to switch between `.erb` and `.css` files frequently, if at all.
+
+### Initial Admin User
+
+Note that the initial Admin user has the email `admin@admin` and the password `Admin_123`. It's highly recommended to change these after you login.
+
 ### Creating Tests
 
 Since we're using RSpec for tests, all tests should be under the `spec` directory, **not** the `test` directory.
@@ -113,6 +121,12 @@ docker compose run --rm web bin/bundle exec rubocop --parallel --auto-correct
 The preferred method is to view the [production website hosted on Herkou](evaluate-me-prod.herokuapp.com).
 But, if you prefer to run locally:
 
+1. Set the `RAILS_ENV` environment variable to `production`.
+2. Run `docker build .`
+3. Run `docker compose up`
+
+### Heroku Manual Deployment Steps
+
 1. `heroku container:push web --recursive`
 2. `heroku container:release web`
 
@@ -125,16 +139,16 @@ Note for Heroku, you also need to set `SECRET_KEY_BASE`.
 1. Generate a secrete key using `rake secret`
 2. Run `heroku config:set --app=<app name> SECRET_KEY_BASE='generate key'`
 
-## Controller Work
+## Work Credit
 
 - Alan Chen
   - Users, Account Activation, Dashboards, Sessions, Requests, Static Pages
 - John Calentine
-  - Courses, Projects
+  - Courses, Projects controllers
 - Blake Whitman
-  - TBF
+  - RSpec tests, presentation slides
 - Chih-Hua Nieh
-  - TBF
+  - Team Controller
 
 ## References
 
@@ -142,4 +156,4 @@ Note for Heroku, you also need to set `SECRET_KEY_BASE`.
 - [General Configuration](https://github.com/ryanwi/rails7-on-docker)
 - [FactoryBot](https://semaphoreci.com/community/tutorials/working-effectively-with-data-factories-using-factorygirl)
 - [CSS Wave](https://www.csscodelab.com/water-effect-simple-css-wave-animation/)
-- [Illustration SVGs](shape.so)
+- [Illustration SVGs](https://shape.so)
