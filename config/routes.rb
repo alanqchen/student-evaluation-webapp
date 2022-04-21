@@ -36,6 +36,9 @@ Rails.application.routes.draw do
   resources :users
 
   resources :courses
+  get 'courses/new'
+  get 'courses/show'
+
   resources :projects
   get 'projects/new'
 
