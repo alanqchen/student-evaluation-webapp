@@ -14,8 +14,9 @@ Rails.application.routes.draw do
   delete '/users/:id', to: 'users#destroy'
   get '/user/:uid/teams', to 'teams#show_users_teams'
   get '/user/:uid/team/:tid', to 'teams#show_user_team'
-  delete '/teams/:id' to 'teams#destroy'
-  
+  delete '/teams/:id', to 'teams#destroy'
+  post '/teams', to 'teams#create'
+  post '/teams/:id/edit', to 'teams#edit_team'
   get '/signup', to: 'users#new'
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'

@@ -1,8 +1,14 @@
 class UserTeamController < ApplicationController
-    
-    def index
-        @section = Section.find (params[:section_id])
-        @groups = Group.where section_id: @section.id
+
+    def create
+        @user_team = User_team.new user_team_params
+    end
+
+    def show
+    end
+
+    def destroy
+        @user_team.destroy
     end
 
 
