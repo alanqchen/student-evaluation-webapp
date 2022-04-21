@@ -1,0 +1,16 @@
+<div class="flex flex-col max-w-md w-full mt-4">
+  <h2 class="mt-4 self-start">Forgot Password</h2>
+  <%= turbo_frame_tag "flash" do %>
+    <%= render "partials/flash" %>
+  <% end %>
+  <div class="col-md-6 col-md-offset-3 w-full">
+    <%= form_with(url: password_resets_path, scope: :password_reset, local: true, class: 'flex flex-col items-center w-full') do |f| %>
+      <div class="mb-6 w-full">
+        <%= f.label :email, class: 'block mb-2 text-sm font-medium text-gray-900' %>
+        <%= f.email_field :email, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5', placeholder: "john.doe@email.com", required: true %>
+      </div>
+      <%= f.submit "Submit", class: "self-start text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-10 py-2.5 text-center" %>
+    <% end %>
+    <p class="text-sm mt-8"><%= link_to "Go back to login", login_path %></p>
+  </div>
+</div>

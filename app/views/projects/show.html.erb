@@ -1,0 +1,21 @@
+
+
+<table class="shadow-2xl font-[Poppins] border-2 border-cyan-300 w-1/2">
+  <thead  class = "text-white">
+    <tr>
+      <th class="py-3 bg-blue-600">Project</th>
+      <th class="py-3 bg-blue-600">Status</th>
+    </tr>
+  </thead>
+  <tbody class="text-white text-center">
+    <tr class="bg-blue-300 cursor-pointer duration-300">
+      <td><%= @project.name%></td>
+
+    <% if @project.closed %>
+        <td>Inactive</td>
+    <% else %>
+         <td>Active</td>
+    <% end %>
+    </tr>
+  </tbody>
+</table>
