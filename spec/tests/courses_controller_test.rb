@@ -19,22 +19,21 @@ describe CoursesController do
         assert_response :redirect
     end
     
-    it "should not save course without user_id" do 
+    it "should not save course without user_id" do
         course = Course.new
         assert_not course.save
-    end 
+    end
     
-    it "should report error" do 
-        assert_raises(NameError) do
-          some_undefined_variable 
-        end 
-    end 
-    
+    it "should report error" do
+        assert_raises NameError do
+          some_undefined_variable
+        end
+    end
+
     it "should destroy course" do
         assert_difference('Course.count', -1) do
           delete course_url(@course)
         end
-    
         assert_redirected_to courses_url
     end
 end

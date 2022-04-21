@@ -13,11 +13,10 @@ describe TeamsController do
     assert_response :redirect
   end
 
-  it "should report error" do 
-    assert_raises(NameError) do
-      undefined_variable 
-    end 
-  end 
+  it "should report error" do
+    assert_raises NameError do
+      undefined_variable
+  end
 
   it "should destroy team" do
     assert_difference('Team.count', -1) do
