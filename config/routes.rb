@@ -12,6 +12,10 @@ Rails.application.routes.draw do
   post 'users/:id/edit', to: 'users#edit_user'
   post 'user/edit', to: 'users#edit'
   delete '/users/:id', to: 'users#destroy'
+  get '/user/:uid/teams', to 'teams#show_users_teams'
+  get '/user/:uid/team/:tid', to 'teams#show_user_team'
+  delete '/teams/:id' to 'teams#destroy'
+  
   get '/signup', to: 'users#new'
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
