@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'teams/new'
+  get 'teams/edit'
+  get 'teams/show'
+  get 'teams/destroy'
   get 'password_resets/new'
   get 'password_resets/edit'
   get 'evaluations/new'
@@ -14,6 +18,11 @@ Rails.application.routes.draw do
   post 'users/:id/edit', to: 'users#edit_user'
   post 'user/edit', to: 'users#edit'
   delete '/users/:id', to: 'users#destroy'
+  get '/user/:uid/teams', to: 'teams#show_users_teams'
+  get '/user/:uid/team/:tid', to: 'teams#show_user_team'
+  delete '/teams/:id', to: 'teams#destroy'
+  post '/teams', to: 'teams#create'
+  post '/teams/:id/edit', to: 'teams#edit_team'
   get '/signup', to: 'users#new'
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
@@ -34,8 +43,14 @@ Rails.application.routes.draw do
     resources :dashboards, path: 'dashboard'
   end
   resources :users
+
   resources :courses
+  get 'courses/new'
+  get 'courses/show'
+
   resources :projects
+  get 'projects/new'
+
   resources :password_resets, only: [:new, :create, :edit, :update]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

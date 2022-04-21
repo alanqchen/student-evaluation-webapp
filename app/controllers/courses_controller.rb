@@ -1,13 +1,14 @@
 class CoursesController < ApplicationController
   before_action :set_course, only: %i[ show edit update destroy ]
 
-  # GET /courses or /courses.json
+  # GET /courses
   def index
     @courses = Course.all
   end
 
-  # GET /courses/1 or /courses/1.json
+  # GET /courses/1
   def show
+      @course = Course.find params[:id]
   end
 
   # GET /courses/new
@@ -19,22 +20,19 @@ class CoursesController < ApplicationController
   def edit
   end
 
-  # POST /courses or /courses.json
+  # POST /courses
   def create
     @course = Course.new course_params
-
-    respond_to do |format|
       if @course.save
-        format.html { redirect_to course_url(@course), notice: "Course was successfully created." }
-        format.json { render :show, status: :created, location: @course }
+        #format.html { redirect_to course_url(@course), notice: "Course was successfully created." }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @course.errors, status: :unprocessable_entity }
+        #format.html { render :new, status: :unprocessable_entity }
+        render 'new'
       end
-    end
+
   end
 
-  # PATCH/PUT /courses/1 or /courses/1.json
+  # PATCH/PUT /courses/1
   def update
     respond_to do |format|
       if @course.update course_params
@@ -47,7 +45,7 @@ class CoursesController < ApplicationController
     end
   end
 
-  # DELETE /courses/1 or /courses/1.json
+  # DELETE /courses/1
   def destroy
     @course.destroy
 
@@ -65,6 +63,6 @@ class CoursesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def course_params
-      params.fetch(:course, {})
+      params.require(:course).permit :name, :active
     end
 end
