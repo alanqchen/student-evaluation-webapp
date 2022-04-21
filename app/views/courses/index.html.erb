@@ -1,15 +1,30 @@
-                 <div class="w-full">
-  <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-  <% end %>
-
- 
-    <h1 class="font-bold text-4xl">Course Page</h1>
-   <div class="flex justify-start">
-    <%= link_to 'New course', new_course_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+<%= render layout: "partials/dashboard", locals: { active: "Courses" } do %>
+  <div class="container w-full">  
+    <div class="flex flex-row items-center justify-between">
+      <h1 class="font-bold text-4xl">Courses</h1>
+      <% if current_user.instructor %>
+        <%= button_to new_course_path, method: :get, data: {"turbo-frame": "modal"}, class: "text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2" do %>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+        <% end %>
+      <% end %>
+    </div>
+    <%= turbo_frame_tag "flash" do %>
+      <%= render "partials/flash" %>
+    <% end %>
+    <div id="courses" class="min-w-full grid md:grid-cols-2 gap-3 mt-2">
+      <% current_user.courses.each do |course| %>
+        <%= link_to dashboard_course_path(course.id), data: {"turbo-frame": "dashboardContent", "turbo-action": "advance"}, class: "block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100" do %>
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900"><%= course.name %></h5>
+          <div class="flex flex-row items-center justify-between w-full">
+            <% if course.active %>
+              <span class="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">Active</span>
+            <% else %>
+              <span class="bg-gray-100 text-gray-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">Inactive</span>
+            <% end %>
+            <p class="font-normal text-gray-700 text-sm"><%= get_num_users course %> User(s)</p>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
   </div>
-
-  <div id="courses" class="min-w-full">
-    <%= render @courses %>
-  </div>
-</div>
+<% end %>

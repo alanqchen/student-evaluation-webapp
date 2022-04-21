@@ -49,7 +49,6 @@ class UsersController < ApplicationController
       turbo_stream.replace("toast", partial: "partials/toast", locals: { type: "danger", message: "#{email} has been deleted" }),
       turbo_stream.update("dashboardTop", template: "dashboards/manage_users")
     ]
-    #render 'destroy_user', locals: { deleted_email: email }
   end
 
     private
