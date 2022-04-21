@@ -1,4 +1,4 @@
-<%= render layout: "partials/dashboard", locals: { active: "Manage Users" } do %>
+<%= render layout: "partials/dashboard", locals: { active: "Users" } do %>
   <h2>Users</h2>
   <div data-controller="filter" class="relative overflow-x-auto shadow-md sm:rounded-lg">
     <div class="p-4">
@@ -61,7 +61,7 @@
             </td>
             <td class="px-6 py-4 text-right w-1/6">
               <% unless u.admin %>
-                <p><%= link_to "Edit", edit_user_path(u.id), data: {"turbo-frame": "modal" } %></p>
+                <p><%= link_to "Edit", edit_user_path(u.id), data: {"turbo-frame": "modal"} %></p>
               <% end %>
             </td>
           </tr>

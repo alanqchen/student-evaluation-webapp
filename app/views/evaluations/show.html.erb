@@ -1,4 +1,8 @@
-<div>
-  <h1 class="font-bold text-4xl">Evaluations#show</h1>
-  <p>Find me in app/views/evaluations/show.html.erb</p>
-</div>
+<%= render layout: "partials/dashboard", locals: { active: "Evaluations" } do %>
+  <div class="mx-auto md:w-2/3 w-full flex">
+    <div class="mx-auto w-full">
+      <h2>Evaluations</h2>
+      <%= render partial: "partials/evaluations/show", locals: {user: current_user} %>
+    </div>
+  </div>
+<% end %>

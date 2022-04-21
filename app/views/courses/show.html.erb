@@ -1,16 +1,45 @@
-<div class="mx-auto md:w-2/3 w-full flex">
-  <div class="mx-auto">
-    <% if notice.present? %>
-      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-    <% end %>
-
-   
-    <div class="text-blue-600 font-bold">Course Name: <%=@course.name%></div>
-    
-    <%= link_to 'Edit this course', edit_course_path(@course), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <div class="inline-block ml-2">
-      <%= button_to 'Destroy this course', course_path(@course), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
+<%= render layout: "partials/dashboard", locals: { active: "Courses" } do %>
+  <div class="mx-auto md:w-2/3 w-full flex">
+    <div class="mx-auto w-full">
+      <div class="flex flex-row items-center justify-between">
+        <h2><%= @course.name %></h2>
+        <% if current_user.instructor %>
+          <%= button_to edit_course_path(@course), method: :get, class: "text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2" do %>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="flex flex-row items-center justify-between">
+        <h3>Projects</h3>
+        <% if current_user.instructor %>
+          <%= button_to new_course_project_path(@course.id), method: :get, data: {"turbo-frame": "modal"}, class: "text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2" do %>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+          <% end %>
+        <% end %>
+      </div>
+      <%= render partial: "partials/courses/projects", locals: {projects: @course.projects} %>
+      <div class="flex flex-row items-center justify-between mt-8">
+        <h3>Teams</h3>
+        <% if current_user.instructor %>
+          <%= button_to new_course_team_path(@course.id), method: :get, data: {"turbo-frame": "modal"}, class: "text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2" do %>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+          <% end %>
+        <% end %>
+      </div>
+      <% if current_user.instructor %>
+        <%= render partial: "partials/courses/teams", locals: {teams: all_teams_in_course(@course)} %>
+      <% else %>
+        <%= render partial: "partials/courses/teams", locals: {teams: all_teams_for_user(current_user)} %>
+      <% end %>
+      <div class="flex flex-row items-center justify-between mt-8">
+        <h3>Users</h3>
+        <% if current_user.instructor %>
+          <%= button_to new_course_user_path(@course.id), method: :get, data: {"turbo-frame": "modal"}, class: "text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2" do %>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+          <% end %>
+        <% end %>
+      </div>
+      <%= render partial: "partials/courses/users", locals: {users: @course.users, course: @course} %>
     </div>
-    <%= link_to 'Back to courses', courses_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
   </div>
-</div>
+<% end %>

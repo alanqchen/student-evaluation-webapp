@@ -15,14 +15,16 @@ class User < ApplicationRecord
   validates :approver, inclusion: { in: [ true, false ] }
 
   def extra_password_validation
-    rules = {
-      "must contain at least one number"           => /(?=.*\d)/, # At least one number
-      "must contain at least one lowercase letter" => /(?=.*[a-z])/, # At least one lowercase letter
-      "must contain at least one uppercase letter" => /(?=.*[A-Z])/, # At least one uppercase letter
-      "must contain at least one symbol" => /(?=.*[[:^alnum:]])/, # At least one symbol
-    }
-    rules.each do |message, regex|
-      errors.add :password, message unless password.match regex
+    unless password.nil?
+      rules = {
+        "must contain at least one number"           => /(?=.*\d)/, # At least one number
+        "must contain at least one lowercase letter" => /(?=.*[a-z])/, # At least one lowercase letter
+        "must contain at least one uppercase letter" => /(?=.*[A-Z])/, # At least one uppercase letter
+        "must contain at least one symbol" => /(?=.*[[:^alnum:]])/, # At least one symbol
+      }
+      rules.each do |message, regex|
+        errors.add :password, message unless password.match regex
+      end
     end
   end
   has_secure_password

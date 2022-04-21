@@ -17,17 +17,16 @@
     <% end %>
   </head>
 
-  <body class="flex flex-col">
+  <body>
     <%= turbo_frame_tag "navbarTop" do %>
       <%= render partial: "partials/navbar" %>
     <% end %>
-    <main class="flex flex-col items-center w-full">
+    <main id="content" class="flex flex-col items-center w-full h-full">
       <%= yield %>
     </main>
     <%= turbo_frame_tag "modal" %>
     <%= turbo_frame_tag "toast" %>
-    <%= debug(params) if Rails.env.development? %>
-    <div class="mt-auto">
+    <div id="footer" class="mt-auto">
       <%= render partial: "partials/footer" %>
     </div>
     <%= javascript_include_tag "flowbite-1.4.1-patched.js", "data-turbolinks-track" => true  %>
