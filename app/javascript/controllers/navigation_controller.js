@@ -19,7 +19,7 @@ export default class extends Controller {
   }
 
   updateLinks(item) {
-    let activeClasses = ['active', 'text-blue-600', 'border-blue-600'];
+    let activeClasses = ['active', 'bg-gradient-to-br', 'from-orange-500', 'to-pink-500', 'text-white'];
 
     this.linkTargets.forEach((link) => {
       link.classList.remove(...activeClasses);

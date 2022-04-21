@@ -1,19 +1,19 @@
-<%= turbo_frame_tag :dashboardTop, class: "flex flex-col items-center w-full" do %>
-  <div class="w-[calc(100%-4rem)] max-w-3xl m-8" data-controller="navigation" data-action="turbo:before-fetch-response@document->navigation#displayContent">
-    <div class="flex flex-row items-center">
-      <h1>Dashboard</h1>
-      <svg classviewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" fill="none" shape-rendering="geometricPrecision" style="color: var(--accents-2); min-width: 32px;"><path d="M16.88 3.549L7.12 20.451"></path></svg>
-      <p class="font-bold overflow-hidden whitespace-nowrap text-ellipsis"><%= current_user.name %></p>
-      <div class="ml-2">
-        <%= badges_for current_user %>
+<%= turbo_frame_tag :dashboardTop, class: "flex flex-row w-full h-full" do %>
+  <div data-controller="navigation" data-action="turbo:before-fetch-response@document->navigation#displayContent" class="flex flex-row w-full h-full">
+    <%= render partial: "partials/dashboard_sidebar", locals: { active: active } %>
+    <div class="w-[calc(100%-4rem)] max-w-3xl m-8 mt-4">
+      <div class="flex flex-row items-center">
+        <p class="font-bold"><%= current_user.name %></p>
+        <div class="ml-2">
+          <%= badges_for current_user %>
+        </div>
       </div>
+      <div class="w-full mt-4">
+        <%= turbo_frame_tag :dashboardContent, "data-navigation-target": "content", class: "w-full" do %>
+          <%= yield %>
+        <% end%>
+      </div>
+      <%= render partial: "partials/loading_indicator" %>
     </div>
-    <%= render partial: "partials/dashboard_navbar", locals: { active: active } %>
-    <div class="w-full mt-4">
-      <%= turbo_frame_tag :dashboardContent, "data-navigation-target": "content", class: "w-full" do %>
-        <%= yield %>
-      <% end%>
-    </div>
-    <%= render partial: "partials/loading_indicator" %>
   </div>
 <% end %>
