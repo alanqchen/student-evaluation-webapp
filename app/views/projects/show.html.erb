@@ -10,7 +10,12 @@
   <tbody class="text-white text-center">
     <tr class="bg-blue-300 cursor-pointer duration-300">
       <td><%= @project.name%></td>
-      <td> <%= @project.closed %></td>
+
+    <% if @project.closed %>
+        <td>Inactive</td>
+    <% else %>
+         <td>Active</td>
+    <% end %>
     </tr>
   </tbody>
 </table>

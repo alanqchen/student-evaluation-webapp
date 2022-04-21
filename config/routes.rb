@@ -34,8 +34,11 @@ Rails.application.routes.draw do
     resources :dashboards, path: 'dashboard'
   end
   resources :users
+
   resources :courses
   resources :projects
+  get 'projects/new'
+
   resources :password_resets, only: [:new, :create, :edit, :update]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

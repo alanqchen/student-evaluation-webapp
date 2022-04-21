@@ -1,4 +1,12 @@
-<div>
-  <h1 class="font-bold text-4xl">Projects</h1>
-  <p>Find me in app/views/projects/new.html.erb</p>
+
+  <h1 class="row font-bold text-4xl">New Project</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_with(model: @project, local: true) do |f| %>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+      <%= f.submit "Create new project", class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+    <% end %>
+  </div>
 </div>
