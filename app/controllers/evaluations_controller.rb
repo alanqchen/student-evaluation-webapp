@@ -1,11 +1,12 @@
 class EvaluationsController < ApplicationController
-  before_action :get_user, only: [:show, :edit, :submit, :unsubmit]
+  before_action :logged_in_user
+  before_action :valid_evaluation_and_user
 
   def new
     unless logged_in?
       redirect_to login_url
     end
-    @evaluate = Evaluation.new
+    @evaluation = Evaluation.new
   end
 
   def edit
@@ -21,6 +22,19 @@ class EvaluationsController < ApplicationController
   end
 
   def show
-    @evals = Evaluation.where from_user: current_user&.id
+    @evaluation = Evaluation.find_by id: params[:id]
   end
+
+  private
+
+    def logged_in_user
+      unless logged_in?
+        redirect_to login_url
+      end
+    end
+
+    def valid_evaluation_and_user
+      #@evaluation = Evaluation.find_by id: 
+      #unless 
+    end
 end

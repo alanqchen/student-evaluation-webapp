@@ -19,14 +19,14 @@
         <%= f.text_field :name, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5', required: true, value: @project.name %>
       </div>
       <div class="mb-6 w-full">
-        <%= f.label :closed, "Active", class: 'block mb-2 text-sm font-medium text-gray-900' %>
-        <%= f.check_box :closed, "aria-describedby": "active", type: "checkbox", checked: !@project.closed, class: "w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300" %>
+        <%= f.label :active, "Active", class: 'block mb-2 text-sm font-medium text-gray-900' %>
+        <%= f.check_box :active, "aria-describedby": "active", type: "checkbox", checked: !@project.closed, class: "w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300" %>
       </div>
       <%= f.submit "Update Project", class: "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center" %>
     <% end %>
   </div>
   <div class="flex flex-row items-center justify-end w-full p-6 space-x-2 rounded-b border-t border-gray-200">
-    <%= button_to "Remove Project", destroy_course_project_path(@course, @project), method: :delete, data: {"turbo-frame": "toast", "action": "modal#close" }, class: "text-red-500 hover:text-white border border-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" %>
+    <%= link_to "Remove Project", destroy_course_project_path(@course, @project), method: :delete, data: {"turbo-method": :delete, "turbo-frame": "_top", "turbo-action": "advance", "action": "modal#close" }, class: "text-red-500 hover:text-white border border-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" %>
     <button type="button" data-action="modal#close" class="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Cancel</button>
   </div>
 <% end %>

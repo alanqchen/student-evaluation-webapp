@@ -13,14 +13,10 @@
     <% end %>
     <div id="courses" class="min-w-full grid md:grid-cols-2 gap-3 mt-2">
       <% current_user.courses.each do |course| %>
-        <%= link_to dashboard_course_path(course.id), data: {"turbo-frame": "dashboardContent", "turbo-action": "advance"}, class: "block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100" do %>
+        <%= link_to course_path(course.id), data: {"turbo-frame": "dashboardContent", "turbo-action": "advance"}, class: "block p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100" do %>
           <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900"><%= course.name %></h5>
           <div class="flex flex-row items-center justify-between w-full">
-            <% if course.active %>
-              <span class="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">Active</span>
-            <% else %>
-              <span class="bg-gray-100 text-gray-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded">Inactive</span>
-            <% end %>
+            <%= badge_for_course course %>
             <p class="font-normal text-gray-700 text-sm"><%= get_num_users course %> User(s)</p>
           </div>
         <% end %>

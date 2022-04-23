@@ -1,7 +1,8 @@
 class CoursesController < ApplicationController
   before_action :logged_in_user
+  before_action :valid_course_and_user, only: [:show, :edit, :update, :destroy]
+  before_action :instructor_only, only: [:edit, :update, :destroy]
   before_action :set_course, only: %i[ show edit update destroy ]
-  before_action :user_in_course, only: [:show, :edit, :update]
 
   # GET /courses
   def index
@@ -10,7 +11,7 @@ class CoursesController < ApplicationController
 
   # GET /courses/1
   def show
-    @course = Course.find params[:id]
+    @course = Course.find_by id: params[:id]
   end
 
   # GET /courses/new
@@ -20,6 +21,10 @@ class CoursesController < ApplicationController
 
   # GET /courses/1/edit
   def edit
+    @course = Course.find_by id: params[:id]
+    render turbo_stream: [
+      turbo_stream.replace("modal", template: "courses/edit"),
+    ]
   end
 
   # POST /courses
@@ -57,7 +62,7 @@ class CoursesController < ApplicationController
               turbo_stream.replace("toast", partial: "partials/toast", locals: { type: "success", message: "#{user.email} has been added" }),
               turbo_stream.update("dashboardTop", template: "courses/show")
             ]
-            update_user_course_evals user, @course
+            create_user_course_evals user, @course
           else
             # Need all these else's since renders don't return and we can't have multiple called in a single branch
             user.destroy
@@ -128,23 +133,45 @@ class CoursesController < ApplicationController
     @course = Course.find_by id: params[:id]
     @user = User.find_by id: params[:uid]
     @team = Team.find_by name: params[:user][:team]
-    if @team.nil?
-      teams_to_delete = @user.teams.where course_id: @course.id
-      @user.teams.delete teams_to_delete
-    elsif !@user.team_ids.include? @team.id
-      # To make things simpler, only support one team
-      all_course_evals_to_user(@user, @course).each do |eval|
-        eval.destroy
+    # Check that instructor ins't being given team
+    if !@team.nil? && @user.instructor
+      flash[:danger] = { title: 'Error!', message: " Instructor cannot be assigned a team" }
+      render turbo_stream: [
+        turbo_stream.replace("modal", template: "courses/edit_course_user"),
+        turbo_stream.replace("flash_alert", partial: "partials/flash", locals: { flash: flash }),
+        turbo_stream.update("dashboardTop", template: "courses/show")
+      ]
+    else
+      # Check if 1. set to no team or 2. set to different team
+      if @team.nil?
+        teams_to_delete = @user.teams.where course_id: @course.id
+        # delete user-teams association for all teams in courses the user was a part of
+        @user.teams.delete teams_to_delete
+        # remove all course evals for user
+        remove_user_course_evals @user, @course
+      elsif !@user.team_ids.include? @team.id
+        # To make things simpler, only support one team so we can destroy all evals that are associated with the user
+        all_course_evals_to_user(@user, @course).each do |eval|
+          eval.destroy
+        end
+        all_course_evals_from_user(@user, @course).each do |eval|
+          eval.destroy
+        end
+        teams_to_delete = @user.teams.where course_id: @course.id
+        # delete user-teams association for all teams in courses the user was a part of
+        @user.teams.delete teams_to_delete
+        # add new team
+        @user.teams << [@team]
+        # Create new course evals for new user
+        create_user_course_evals @user, @course
       end
-      teams_to_delete = @user.teams.where course_id: @course.id
-      @user.teams.delete teams_to_delete
-      @user.teams << [@team]
-      update_user_course_evals @user, @course
+      flash[:success] = { title: 'Success!', message: " #{@user.email} team set" }
+      render turbo_stream: [
+        turbo_stream.replace("modal", template: "courses/edit_course_user"),
+        turbo_stream.replace("flash_alert", partial: "partials/flash", locals: { flash: flash }),
+        turbo_stream.update("dashboardTop", template: "courses/show")
+      ]
     end
-    render turbo_stream: [
-      turbo_stream.replace("toast", partial: "partials/toast", locals: { type: "success", message: "#{@user.email} team set" }),
-      turbo_stream.update("dashboardTop", template: "courses/show")
-    ]
   end
 
   private
@@ -158,15 +185,24 @@ class CoursesController < ApplicationController
       params.require(:course).permit :name, :active
     end
 
-    def user_in_course
-      unless @course.user_ids.include? current_user.id
-        redirect_to dashboards_path
-      end
-    end
-
     def logged_in_user
       unless logged_in?
         redirect_to login_url
+      end
+    end
+
+    def valid_course_and_user
+      @course = Course.find_by id: params[:id]
+      if !@course
+        redirect_to courses_path
+      elsif !current_user.courses.include? @course
+        redirect_to courses_path
+      end
+    end
+
+    def instructor_only
+      unless current_user.instructor
+        redirect_to course_path(@course)
       end
     end
 end

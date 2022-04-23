@@ -1,5 +1,7 @@
 # Evaluate.me
 
+[![Branch Push Lint & Test](https://github.com/cse3901-2022sp-giles/project-6-evaluate-me-ctrl-c/actions/workflows/push-jobs.yml/badge.svg?branch=main)](https://github.com/cse3901-2022sp-giles/project-6-evaluate-me-ctrl-c/actions/workflows/push-jobs.yml)
+
 Website evaluation tool.
 
 ## Local Setup
@@ -51,6 +53,8 @@ Note that since we use tailwind, most of the CSS styling is inline with the `.er
 ### Initial Admin User
 
 Note that the initial Admin user has the email `admin@admin` and the password `Admin_123`. It's highly recommended to change these after you login.
+
+Feel free to direct-message `nodinawe#0012` (Alan Chen) on Discord if you need the heroku database to be reset.
 
 ### Creating Tests
 

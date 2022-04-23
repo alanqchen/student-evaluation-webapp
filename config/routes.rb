@@ -32,8 +32,13 @@ Rails.application.routes.draw do
   get '/dashboard/settings_turbo', to: 'dashboards#edit_dashboard'
   get '/dashboard/manage_users', to: 'dashboards#manage_users'
   get '/dashboard/manage_requests', to: 'dashboards#manage_requests'
-  get '/dashboard/courses', to: 'courses#index'
-  get '/dashboard/course/:id', to: 'courses#show', as: 'dashboard_course'
+  get '/dashboard/courses', to: 'courses#index', as: 'courses'
+  get '/dashboard/course/new', to: 'courses#new', as: 'new_course'
+  post '/dashboard/course/new', to: 'courses#create', as: 'create_course'
+  get '/dashboard/course/:id', to: 'courses#show', as: 'course'
+  get '/dashboard/course/:id/edit', to: 'courses#edit', as: 'edit_course'
+  post '/dashboard/course/:id/edit', to: 'courses#update', as: 'update_course'
+  delete '/dashboard/courses/:id/delete', to: 'courses#destroy', as: 'destroy_course'
   get '/dashboard/course/:id/user/new', to: 'courses#new_user', as: 'new_course_user'
   post '/dashboard/course/:id/user/new', to: 'courses#create_and_add_user', as: 'create_and_add_course_user'
   get '/dashboard/course/:id/user/:uid/edit', to: 'courses#edit_course_user', as: 'edit_course_user'
@@ -47,8 +52,12 @@ Rails.application.routes.draw do
   get '/dashboard/course/:id/project/:pid', to: 'projects#show', as: 'show_course_project'
   get '/dashboard/course/:id/project/:pid/edit', to: 'projects#edit', as: 'edit_course_project'
   post '/dashboard/course/:id/project/:pid/edit', to: 'projects#update', as: 'update_course_project'
-  delete '/dashboard/course/:id/project/:pid', to: 'projects#destroy', as: 'destroy_course_project'
-  get '/dashboard/evaluations', to: 'evaluations#show', as: 'show_evaluations'
+  delete '/dashboard/course/:id/project/:pid/delete', to: 'projects#destroy', as: 'destroy_course_project'
+  get '/dashboard/evaluations', to: 'evaluations#index', as: 'evaluations'
+  get '/dashboard/evaluation/:id', to: 'evaluations#show', as: 'show_evaluation'
+  get '/dashboard/evaluation/:id/edit', to: 'evaluation#edit', as: 'edit_evaluation'
+  post '/dashboard/evaluation/:id/edit', to: 'evaluation#update', as: 'update_evaluation'
+  delete '/dashboard/evaluation/:id/delete', to: 'evaluation#destroy', as: 'destroy_evaluation'
   resources :account_activations, only: [:edit]
   post '/requests/:id', to: 'requests#accept'
   delete '/requests/:id', to: 'requests#reject'
@@ -60,10 +69,6 @@ Rails.application.routes.draw do
     resources :dashboards, path: 'dashboard'
   end
   resources :users
-
-  resources :courses
-  get 'courses/new'
-  get 'courses/show'
 
   resources :projects
   get 'projects/new'

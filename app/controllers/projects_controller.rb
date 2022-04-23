@@ -1,8 +1,10 @@
 class ProjectsController < ApplicationController
+  before_action :logged_in_user
+  before_action :valid_project_and_user, only: [:show, :edit, :update, :destroy]
 
   def show
     @course = Course.find_by id: params[:id]
-    @project = Project.find params[:pid]
+    @project = Project.find_by id: params[:pid]
   end
 
   def create
@@ -11,11 +13,9 @@ class ProjectsController < ApplicationController
     if @project.valid?
       if @project.save
         @course.projects << @project
-        update_course_evals @course
-        flash[:success] = {title: 'Success!', message: " Created #{@project.name}"}
+        create_course_evals @course
         render turbo_stream: [
-          turbo_stream.replace("modal", template: "projects/new"),
-          turbo_stream.replace("flash_alert", partial: "partials/flash", locals: { flash: flash }),
+          turbo_stream.replace("toast", partial: "partials/toast", locals: { type: "success", message: "Created #{@project.name}" }),
           turbo_stream.update("dashboardTop", template: "courses/show")
         ]
       else
@@ -29,8 +29,7 @@ class ProjectsController < ApplicationController
     else
       flash[:danger] = {title: 'Error!', message: " Failed to save project: #{@project.errors.full_messages.to_sentence}"}
       render turbo_stream: [
-        turbo_stream.replace("modal", template: "projects/new"),
-        turbo_stream.replace("flash_alert", partial: "partials/flash", locals: { flash: flash }),
+        turbo_stream.replace("toast", partial: "partials/toast", locals: { type: "success", message: "Project #{@project.name} has been create" }),
         turbo_stream.update("dashboardTop", template: "courses/show")
       ]
     end
@@ -52,7 +51,7 @@ class ProjectsController < ApplicationController
   def update
     @course = Course.find_by id: params[:id]
     @project = Project.find params[:pid]
-    if @project.update name: params[:project][:name], closed: !params[:project][:closed]
+    if @project.update name: params[:project][:name], closed: params[:project][:active] != '1'
       flash[:success] = {title: 'Success!', message: " Updated #{@project.name}"}
       render turbo_stream: [
         turbo_stream.replace("modal", template: "projects/edit"),
@@ -69,7 +68,31 @@ class ProjectsController < ApplicationController
     end
   end
 
-  #def index
-   # @projects = Project.all
-  #end
+  def destroy
+    @course = Course.find_by id: params[:id]
+    @project = Project.find params[:pid]
+    @project.destroy
+    render turbo_stream: [
+      turbo_stream.replace("toast", partial: "partials/toast", locals: { type: "danger", message: "Project #{@project.name} has been deleted" }),
+      turbo_stream.update("dashboardTop", template: "courses/show")
+    ]
+  end
+
+  private
+
+    def logged_in_user
+      unless logged_in?
+        redirect_to login_url
+      end
+    end
+
+    def valid_project_and_user
+      @course = Course.find_by id: params[:id]
+      @project = Project.find_by id: params[:pid]
+      if !@course || !current_user.courses.include?(@course)
+        redirect_to courses_path
+      elsif !@project || !@course.projects.include?(@project)
+        redirect_to course_path(@course.id)
+      end
+    end
 end
