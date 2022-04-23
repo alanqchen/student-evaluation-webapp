@@ -68,6 +68,8 @@ Rails.application.routes.draw do
   resources :projects
   get 'projects/new'
 
+  resources :teams
+
   resources :password_resets, only: [:new, :create, :edit, :update]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
