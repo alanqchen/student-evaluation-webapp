@@ -33,8 +33,9 @@ class TeamsController < ApplicationController
   def edit
   end
 
+  #test with a team in the db and enter teams/id#
   def show
-    @team = Team.find params[:id]
+      @team = Team.find params[:id]
   end
 
   def destroy
@@ -43,7 +44,7 @@ class TeamsController < ApplicationController
   private
 
     def team_params
-      params.require(:team).permit :name
+      params.require(:team).permit :name, :id
     end
 
 end
