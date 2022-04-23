@@ -1,4 +1,11 @@
-<div>
-  <h1 class="font-bold text-4xl">Teams#edit</h1>
-  <p>Find me in app/views/teams/edit.html.erb</p>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_with(model: @team, local: true) do |f| %>
+    
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    
+      <%= f.submit "Edit Team", class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+    <% end %>
+  </div>
 </div>
