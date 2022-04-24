@@ -6,4 +6,3 @@ student = User.create name: 'student 3', email: 'student3@student', password: 'S
 student = User.create name: 'student 4', email: 'student4@student', password: 'Student_4', password_confirmation: 'Student_4', admin: false, instructor: false, student: true, approver: false, activated: true
 instructor = User.create name: 'instructor 1', email: 'instructor1@instructor.edu', password: 'Instructor_1', password_confirmation: 'Instructor_1', admin: false, instructor: true, student: false, approver: false, activated: true
 instructor = User.create name: 'instructor 2', email: 'instructor2@instructor.edu', password: 'Instructor_2', password_confirmation: 'Instructor_2', admin: false, instructor: true, student: false, approver: false, activated: true
-
