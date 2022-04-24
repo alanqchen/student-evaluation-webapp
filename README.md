@@ -161,7 +161,7 @@ The preferred method is to view the [production website hosted on Herkou](evalua
 If you find yourself requiring the db to be reset, feel free to direct-message `nodinawe#0012` (Alan Chen) on Discord.
 Or as a backup, you could always run `docker-compose up` in the project directory (after following development steps) to run locally.
 
-Also, the db also has default users, with credentials in `db/seeds.rb`.
+Also, the db also has default users, with credentials in `db/seeds.rb`. Most important is the default admin user which has the email `admin@admin` and the password `Admin_123`.
 
 The intented user flow is
 
