@@ -1,4 +1,31 @@
 <% if current_user.admin %>
   <p>You're logged-in as the admin user, manage other users by clicking on "Users" on the sidebar.</p>
+  <p>Accept requests from instructors to create accounts by clicking on "Requests" on the sidebar.</p>
   <p>If you have not do so, it is highly recommended to change the default admin email and password. You can change these in settings, accessed by click on your profile image icon in the top right and clicking "Settings".</p>
+<% elsif current_user.student %>
+  <div class="min-w-full grid md:grid-cols-2 gap-3 mt-2">
+    <div>
+      <h3>Total Evaluations You've Submitted</h3>
+      <p class="text-2xl">
+        <%= all_evals_from_user(current_user, completed: true).count %>
+      </p>
+    </div>
+    <div>
+      <h3>Average Score Given</h3>
+      <p class="text-2xl">
+        <%= average_user_score_given(current_user) || 'N/A' %>
+      </p>
+    </div>
+    <div>
+      <h3>Average Score Received</h3>
+      <p class="text-2xl">
+        <%= average_user_score_received(current_user) || 'N/A' %>
+      </p>
+    </div>
+  </div>
+  <p class="text-2xl">Welcome to Evaluate.Me!</p>
+  <p class="text-lg">See courses you've been added to and view evaluation results by clicking on "Courses" on the sidebar. Complete evaluations you've been assigned by clicking on "Evaluations" on the sidebar.</p>
+<% else %>
+  <p class="text-2xl">Welcome to Evaluate.Me!</p>
+  <p class="text-lg">Create and manage courses by clicking on "Courses" on the sidebar.</p>
 <% end %>

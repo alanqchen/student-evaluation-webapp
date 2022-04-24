@@ -123,6 +123,9 @@ class UsersController < ApplicationController
           unless !changed_password
             validate_user.extra_password_validation
           end
+          unless !changed_role_instructor && !changed_role_student
+            validate_user.instructor_student_validation
+          end
           if validate_user.valid_attributes? *check_attributes
             user.attributes = update_attributes
             if user.save validate: false

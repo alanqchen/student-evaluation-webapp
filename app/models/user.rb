@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   has_and_belongs_to_many :courses
   has_and_belongs_to_many :teams
-  has_many :evaluations
+  has_many :evaluations, dependent: :destroy
 
   attr_accessor :remember_token, :activation_token, :temp_password, :reset_token
 
@@ -14,6 +14,7 @@ class User < ApplicationRecord
   validates :student, inclusion: { in: [ true, false ] }
   validates :approver, inclusion: { in: [ true, false ] }
 
+  # Password validation
   def extra_password_validation
     unless password.nil?
       rules = {
@@ -31,6 +32,13 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 8 }
   validate :extra_password_validation
   validates :password_confirmation, presence: true
+
+  # validate instructor and student are not both true
+  def instructor_student_validation
+    if instructor && student
+      errors.add :instructor, "can't have student role"
+    end
+  end
 
   # Returns the hash digest of the given string
   def User.digest string

@@ -5,49 +5,63 @@
       <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
         <svg class="w-5 h-5 text-gray-500 fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
       </div>
-      <input type="text" id="table-search" data-target="filter.source" data-action="input->filter#filter" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-80 pl-10 p-2.5"  placeholder="Search for evaluations">
+      <input type="text" id="table-search" data-filter-target="source" data-action="input->filter#filter" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-80 pl-10 p-2.5"  placeholder="Search for evaluations (team, project, etc.)">
     </div>
   </div>
   <table class="w-full text-sm text-left text-gray-500 table-fixed">
     <thead class="text-xs text-gray-700 uppercase bg-gray-50">
       <tr>
-        <th scope="col" class="px-6 py-3 w-1/5">
+        <th scope="col" class="px-6 py-3 overflow-hidden whitespace-nowrap w-auto">
+          Project
+        </th>
+        <th scope="col" class="px-6 py-3 overflow-hidden whitespace-nowrap w-1/5">
           From
         </th>
-        <th scope="col" class="px-6 py-3 overflow-hidden whitespace-nowrap w-2/6">
+        <th scope="col" class="px-6 py-3 overflow-hidden whitespace-nowrap w-1/5">
           To
         </th>
-        <th scope="col" class="px-6 py-3 w-auto">
-          Submmited
+        <th scope="col" class="px-6 py-3 w-fit">
+          Complete
         </th>
-        <% if current_user.instructor %>
-          <th scope="col" class="px-6 py-3 w-1/6">
-            <span class="sr-only">Edit</span>
-          </th>
-        <% end %>
+        <th scope="col" class="px-6 py-3 w-auto">
+          Score
+        </th>
+        <th scope="col" class="px-6 py-3 w-fit">
+          <span class="sr-only">View</span>
+        </th>
       </tr>
     </thead>
     <tbody>
-      <% all_evals_from_user(user).each do |e| %>
-        <tr data-target="filter.filterable" data-filter-key="<%= filter_key_for_evaluation e %>" class="bg-white border-b hover:bg-gray-50 dark:hover:bg-gray-600">
-          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap w-1/5">
-            <%= u.name %>
+      <% evaluations.each do |e| %>
+        <tr data-filter-target="filterable" data-filter-key="<%= filter_key_for_evaluation e %>" class="bg-white border-b hover:bg-gray-50 dark:hover:bg-gray-600">
+          <th scope="col" class="px-6 py-4 font-medium text-gray-900 overflow-hidden whitespace-nowrap text-ellipsis w-auto">
+             <%= e.project.name %>
           </th>
-          <td class="px-6 py-4 overflow-hidden whitespace-nowrap max-w-md text-ellipsis w-2/6">
-            <%= u.email %>
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 overflow-hidden whitespace-nowrap text-ellipsis w-1/5">
+            <%= e.from_user.name %>
+          </th>
+          <td class="px-6 py-4 font-medium text-gray-900 overflow-hidden whitespace-nowrap max-w-md text-ellipsis w-1/5">
+            <%= e.to_user.name %>
+          </td>
+          <td class="px-6 py-4 w-fit">
+            <%= badge_for_evaluation e %>
           </td>
           <td class="px-6 py-4 w-auto">
-            <% u.teams.where(course_id: course.id).each do |team| %>
-              <span class="bg-gray-100 text-gray-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded"><%= team.name %></span>
-            <% end%>
+            <% if e.completed %>
+              <%= e.score %>
+            <% else %>
+              N/A
+            <% end %>
           </td>
-          <% if current_user.instructor %>
-            <td class="px-6 py-4 text-right w-1/6">
-              <% unless u.id == current_user.id %>
-                <p><%= link_to "View", edit_course_user_path(@course.id, u.id), data: {"turbo-frame": "modal"} %></p>
+          <td class="px-6 py-4 text-right w-fit">
+            <p>
+              <% if can_edit %>
+                <%= link_to "Edit", edit_evaluation_path(e), data: {"turbo-frame": "modal"} %>
+              <% else %>
+                <%= link_to "View", show_evaluation_path(e), data: {"turbo-frame": "modal"} %>
               <% end %>
-            </td>
-          <% end %>
+            </p>
+          </td>
         </tr>
       <% end %>
     </tbody>
