@@ -36,6 +36,7 @@ class TeamsController < ApplicationController
   end
 
   def edit
+    @team = Team.find params[:tid]
   end
 
   def show
@@ -44,7 +45,13 @@ class TeamsController < ApplicationController
     @team_evals = all_course_team_evals @team
   end
 
+  def update
+    @team = Team.find params[:tid]
+  end
+
   def destroy
+    @team = Team.find params[:tid]
+    @team.destroy
   end
 
   private
