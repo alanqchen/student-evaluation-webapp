@@ -123,11 +123,13 @@ docker compose run --rm web bin/bundle exec rubocop --parallel --auto-correct
 ### Production
 
 The preferred method is to view the [production website hosted on Herkou](evaluate-me-prod.herokuapp.com).
-But, if you prefer to run locally:
+But, if you prefer to run locally, you need to change action cable to use postgres instead of Redis and run:
 
 1. Set the `RAILS_ENV` environment variable to `production`.
 2. Run `docker build .`
 3. Run `docker compose up`
+
+Or, you can simply run the standard docker-compose development configuration using `docker-compose up` if you're just testing.
 
 ### Heroku Manual Deployment Steps
 
@@ -151,16 +153,41 @@ Note for Heroku, you also need to set `SECRET_KEY_BASE`.
   - Requires API key to be setup and set in the environment (no longer can use basic email + password auth)
   - Requires custom domain that you controller that can be used to send emails from
 
-## Work Credit
+## NOTES FOR THE GRADERS
+
+### Running
+
+The preferred method is to view the [production website hosted on Herkou](evaluate-me-prod.herokuapp.com).
+If you find yourself requiring the db to be reset, feel free to direct-message `nodinawe#0012` (Alan Chen) on Discord.
+Or as a backup, you could always run `docker-compose up` in the project directory (after following development steps) to run locally.
+
+Also, the db also has default users, with credentials in `db/seeds.rb`.
+
+The intented user flow is
+
+1. Instructors request a instructor account
+2. Admin approves request to create the instructor account
+3. E-mail is send to instructor with the account activation link and temporary password
+4. Instructor then creates courses and adds students to the courses
+   - If the student don't have an account yet, an account is created and an activation link is sent
+5. Instructor creates projects and teams, and assigns students to a team
+6. Students complete generated evaluations
+
+And other notes:
+
+- Most links in the footer are for decoration only at this point and don't go to anywhere, and same with the "About" link in the navbar
+- Sometimes activation links and other e-mails can break because of url-defense, try using the default accounts if you have trouble with e-mails not sending or the links not working
+
+### Controller Work
 
 - Alan Chen
-  - Users, Account Activation, Dashboards, Sessions, Requests, Static Pages
+  - Users, Account Activation, Dashboards, Sessions, Requests, Static Pages, Evaluations, Teams
 - John Calentine
-  - Courses, Projects controllers
+  - Courses, Projects
 - Blake Whitman
-  - RSpec tests, presentation slides
+  - Evaluations
 - Chih-Hua Nieh
-  - Team Controller
+  - Teams
 
 ## References
 

@@ -34,13 +34,21 @@
               <%= link_to show_evaluations_path, data: {turbo_frame: "dashboardTop", action: "turbo:click->navigation#displayLoading", navigation_target: "link"}, class: "active bg-gradient-to-br from-orange-500 to-pink-500 flex items-center p-2 text-base font-normal text-white rounded-lg" do %>
                 <svg class="flex-shrink-0 w-6 h-6 text-gray-100 transition duration-75 group-hover:text-gray-900" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"></path></svg>
                 <span class="flex-1 ml-3 whitespace-nowrap">Evaluations</span>
-                <span class="inline-flex justify-center items-center p-3 ml-3 w-3 h-3 text-sm font-medium text-blue-600 bg-blue-200 rounded-full dark:text-blue-200">3</span>
+                <% if all_evals_from_user(current_user, completed: false).length > 0 %>
+                  <span class="inline-flex justify-center items-center p-3 ml-3 w-3 h-3 text-sm font-medium text-blue-600 bg-blue-200 rounded-full dark:text-blue-200">
+                    <%= all_evals_from_user(current_user, completed: false).length %>
+                  </span>
+                <% end %>
               <% end %>
             <% else %>
               <%= link_to show_evaluations_path, data: {turbo_frame: "dashboardTop", action: "turbo:click->navigation#displayLoading", navigation_target: "link"}, class: "flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100" do %>
                 <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"></path></svg>
                 <span class="flex-1 ml-3 whitespace-nowrap">Evaluations</span>
-                <span class="inline-flex justify-center items-center p-3 ml-3 w-3 h-3 text-sm font-medium text-blue-600 bg-blue-200 rounded-full dark:text-blue-200">3</span>
+                <% if all_evals_from_user(current_user, completed: false).length > 0 %>
+                  <span class="inline-flex justify-center items-center p-3 ml-3 w-3 h-3 text-sm font-medium text-blue-600 bg-blue-200 rounded-full dark:text-blue-200">
+                    <%= all_evals_from_user(current_user, completed: false).length %>
+                  </span>
+                <% end %>
               <% end %>
             <% end %>
           </li>

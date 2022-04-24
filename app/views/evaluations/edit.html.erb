@@ -1,4 +1,38 @@
-<div>
-  <h1 class="font-bold text-4xl">Evaluations#edit</h1>
-  <p>Find me in app/views/evaluations/edit.html.erb</p>
-</div>
+<%= render "partials/modal" do %>
+  <!-- Modal header -->
+  <div class="flex justify-between items-start p-5 rounded-t border-b">
+    <h3 class="text-xl font-semibold text-gray-900 lg:text-2xl">
+      Complete Evaluation
+    </h3>
+    <button type="button" data-action="modal#close" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="defaultModal">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
+    </button>
+  </div>
+  <!-- Modal body -->
+  <div class="p-6 space-y-6">
+    <%= turbo_frame_tag "flash" do %>
+      <%= render "partials/flash" %>
+    <% end %>
+    <%= form_with(url: update_evaluation_path, scope: :evaluation, local: true, class: 'flex flex-col items-start w-full') do |f| %>
+      <h4>From</h4>
+      <p><%= @evaluation.from_user.name %></p>
+      <h4>To</h4>
+      <p><%= @evaluation.to_user.name %></p>
+      <div class="mb-6 w-full">
+        <%= f.label :score, class: 'block mb-2 text-sm font-medium text-gray-900' %>
+        <%= f.number_field :score, in: 0..5, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5', placeholder: "john.doe@university.edu", required: true %>
+      </div>
+      <div class="mb-6 w-full">
+        <%= f.label :comment, class: 'block mb-2 text-sm font-medium text-gray-900' %>
+        <%= f.text_area :comment, class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5', required: true  %>
+      </div>
+      <div class="flex flex-row items-center justify-start w-full">
+        <%= f.submit "Save Draft", name: 'draft', class: "text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" %>
+        <%= f.submit "Submit", name: 'submit',class: "text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center ml-2" %>
+      </div>
+    <% end %>
+  </div>
+  <div class="flex flex-row items-center justify-end w-full p-6 space-x-2 rounded-b border-t border-gray-200">
+    <button type="button" data-action="modal#close" class="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Cancel</button>
+  </div>
+<% end %>

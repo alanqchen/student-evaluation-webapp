@@ -4,7 +4,7 @@ module EvaluationsHelper
   end
 
   def all_evals_to_user user, completed: nil
-    if completed
+    unless completed.nil?
       Evaluation.where to_user: user, completed: completed
     else
       Evaluation.where to_user: user
@@ -12,7 +12,7 @@ module EvaluationsHelper
   end
 
   def all_evals_from_user user, completed: nil
-    if completed
+    unless completed.nil?
       Evaluation.where from_user: user, completed: completed
     else
       Evaluation.where from_user: user
@@ -20,22 +20,22 @@ module EvaluationsHelper
   end
 
   def all_course_evals_to_user user, course, completed: nil
-    if completed
-      Evaluation.joins(:project).where(to_user: user, project: {course: course}, completed: completed)
+    unless completed.nil?
+      Evaluation.joins(:project).where to_user: user, project: {course: course}, completed: completed
     else
-      Evaluation.joins(:project).where(to_user: user, project: {course: course})
+      Evaluation.joins(:project).where to_user: user, project: {course: course}
     end
   end
   def all_course_evals_from_user user, course, completed: nil
-    if completed
-      Evaluation.joins(:project).where(from_user: user, project: {course: course}, completed: completed)
+    unless completed.nil?
+      Evaluation.joins(:project).where from_user: user, project: {course: course}, completed: completed
     else
-      Evaluation.joins(:project).where(from_user: user, project: {course: course})
+      Evaluation.joins(:project).where from_user: user, project: {course: course}
     end
   end
 
   def all_course_project_evals project, completed: nil
-    if completed
+    unless completed.nil?
       Evaluation.where project: project, completed: completed
     else
       Evaluation.where project: project
@@ -43,7 +43,7 @@ module EvaluationsHelper
   end
 
   def all_course_project_evals_to_user user, project, completed: nil
-    if completed
+    unless completed.nil?
       Evaluation.where project: project, to_user: user, completed: completed
     else
       Evaluation.where project: project, to_user: user
@@ -51,7 +51,7 @@ module EvaluationsHelper
   end
 
   def all_course_project_evals_from_user user, project, completed: nil
-    if completed
+    unless completed.nil?
       Evaluation.where project: project, from_user: user, completed: completed
     else
       Evaluation.where project: project, from_user: user
@@ -59,10 +59,18 @@ module EvaluationsHelper
   end
 
   def all_course_team_evals team, completed: nil
-    if completed
-      Evaluation.where from_user: team.users, completed: completed
+    unless completed.nil?
+      Evaluation.joins(:project).where from_user: team.users, project: {course: team.course}, completed: completed
     else
-      Evaluation.where from_user: team.users
+      Evaluation.joins(:project).where from_user: team.users, project: {course: team.course}
+    end
+  end
+
+  def all_course_project_team_evals team, project, completed: nil
+    unless completed.nil?
+      Evaluation.where project: project, from_user: team.users, completed: completed
+    else
+      Evaluation.where project: project, from_user: team.users
     end
   end
 
@@ -79,13 +87,13 @@ module EvaluationsHelper
       end
     end
     unless evals_to_insert.empty?
-      result = Evaluation.insert_all(evals_to_insert)
+      result = Evaluation.insert_all evals_to_insert
     end
   end
 
   def remove_project_evals_for_user user, project
-    Evaluation.delete(all_course_project_evals_from_user(user, project))
-    Evaluation.delete(all_course_project_evals_to_user(user, project))
+    Evaluation.delete all_course_project_evals_from_user(user, project)
+    Evaluation.delete all_course_project_evals_to_user(user, project)
   end
 
   def average_course_score_for_user user, course
@@ -106,8 +114,35 @@ module EvaluationsHelper
     end
   end
 
+  def average_team_project_score team, project
+    evals = all_course_project_team_evals team, project, completed: true
+    if evals.length == 0
+      res = nil
+    else
+      evals.sum(&:score).to_f / evals.length
+    end
+  end
+
   def average_team_score team
     evals = all_course_team_evals team, completed: true
+    if evals.length == 0
+      res = nil
+    else
+      evals.sum(&:score).to_f / evals.length
+    end
+  end
+
+  def average_user_score_given user
+    evals = all_evals_from_user user, completed: true
+    if evals.length == 0
+      res = nil
+    else
+      evals.sum(&:score).to_f / evals.length
+    end
+  end
+
+  def average_user_score_received user
+    evals = all_evals_to_user user, completed: true
     if evals.length == 0
       res = nil
     else
@@ -122,8 +157,8 @@ module EvaluationsHelper
   end
 
   def remove_user_course_evals user, course
-    Evaluation.delete(all_course_evals_from_user(user, course))
-    Evaluation.delete(all_course_evals_to_user(user, course))
+    Evaluation.delete all_course_evals_from_user(user, course)
+    Evaluation.delete all_course_evals_to_user(user, course)
   end
 
   def create_course_evals course

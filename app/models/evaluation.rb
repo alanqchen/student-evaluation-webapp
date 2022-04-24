@@ -5,6 +5,12 @@ class Evaluation < ApplicationRecord
   has_one :course, through: :project, autosave: false
 
   validates :score, numericality: { only_integer: true }
-  validates :comment, presence: true
+  validates :comment, presence: true, length: { maximum: 300 }
   validates :completed, inclusion: { in: [ true, false ] }
+
+  def valid_score_range
+    errors.add :score, "must be >=0 and <= 5" unless score >= 0 && score <= 5
+  end
+
+  validate :valid_score_range
 end

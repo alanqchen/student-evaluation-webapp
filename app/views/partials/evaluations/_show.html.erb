@@ -11,6 +11,9 @@
   <table class="w-full text-sm text-left text-gray-500 table-fixed">
     <thead class="text-xs text-gray-700 uppercase bg-gray-50">
       <tr>
+        <th scope="col" class="px-6 py-3 overflow-hidden whitespace-nowrap w-auto">
+          Project
+        </th>
         <th scope="col" class="px-6 py-3 overflow-hidden whitespace-nowrap w-1/5">
           From
         </th>
@@ -23,20 +26,21 @@
         <th scope="col" class="px-6 py-3 w-auto">
           Score
         </th>
-        <% if current_user.instructor %>
-          <th scope="col" class="px-6 py-3 w-fit">
-            <span class="sr-only">View</span>
-          </th>
-        <% end %>
+        <th scope="col" class="px-6 py-3 w-fit">
+          <span class="sr-only">View</span>
+        </th>
       </tr>
     </thead>
     <tbody>
       <% evaluations.each do |e| %>
         <tr data-filter-target="filterable" data-filter-key="<%= filter_key_for_evaluation e %>" class="bg-white border-b hover:bg-gray-50 dark:hover:bg-gray-600">
-          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap w-1/5">
+          <th scope="col" class="px-6 py-4 font-medium text-gray-900 overflow-hidden whitespace-nowrap text-ellipsis w-auto">
+             <%= e.project.name %>
+          </th>
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 overflow-hidden whitespace-nowrap text-ellipsis w-1/5">
             <%= e.from_user.name %>
           </th>
-          <td class="px-6 py-4 overflow-hidden whitespace-nowrap max-w-md text-ellipsis w-1/5">
+          <td class="px-6 py-4 font-medium text-gray-900 overflow-hidden whitespace-nowrap max-w-md text-ellipsis w-1/5">
             <%= e.to_user.name %>
           </td>
           <td class="px-6 py-4 w-fit">
@@ -50,7 +54,13 @@
             <% end %>
           </td>
           <td class="px-6 py-4 text-right w-fit">
-            <p><%= link_to "View", show_evaluation_path(e), data: {"turbo-frame": "modal"} %></p>
+            <p>
+              <% if can_edit %>
+                <%= link_to "Edit", edit_evaluation_path(e), data: {"turbo-frame": "modal"} %>
+              <% else %>
+                <%= link_to "View", show_evaluation_path(e), data: {"turbo-frame": "modal"} %>
+              <% end %>
+            </p>
           </td>
         </tr>
       <% end %>

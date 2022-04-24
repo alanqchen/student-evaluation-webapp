@@ -1,6 +1,7 @@
 class CoursesController < ApplicationController
   before_action :logged_in_user
-  before_action :valid_course_and_user, only: [:show, :edit, :update, :destroy]
+  before_action :valid_course, only: [:show, :edit, :update, :destroy]
+  before_action :user_in_course, only: [:show, :edit, :update, :destroy]
   before_action :instructor_only, only: [:edit, :update, :destroy]
   before_action :set_course, only: %i[ show edit update destroy ]
 
@@ -191,11 +192,17 @@ class CoursesController < ApplicationController
       end
     end
 
-    def valid_course_and_user
+    def valid_course
       @course = Course.find_by id: params[:id]
       if !@course
         redirect_to courses_path
       elsif !current_user.courses.include? @course
+        redirect_to courses_path
+      end
+    end
+
+    def user_in_course
+      if !current_user.courses.include? @course
         redirect_to courses_path
       end
     end

@@ -24,6 +24,6 @@ module TeamsHelper
   end
 
   def course_teams_with_user course, user
-    Team.joins(:users).where(course: course, users: user)
+    Team.joins(:users).where course: course, users: user
   end
 end

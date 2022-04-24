@@ -17,21 +17,35 @@
       </div>
       <div class="min-w-full grid md:grid-cols-2 gap-3 mt-2">
         <div>
-          <h3>Average Score</h3>
+          <h3>Project Average Score</h3>
           <p class="text-2xl">
-            <%= average_project_score(@project) || "No score" %> / 5
+            <% if current_user.instructor %>
+              <%= average_project_score(@project) || "No score" %> / 5
+            <% else %>
+              <%= average_team_project_score(@team, @project) || "No score" %> / 5
+            <% end %>
           </p>
         </div>
         <div>
           <h3>Completed Evaluations</h3>
           <p class="text-2xl">
-            <%= all_course_project_evals(@project, completed: true).length %>
+            <%= @project_evals.count{|e| e.completed} %>
             <span class="font-extralight">/</span>
-            <%= all_course_project_evals(@project).length %>
+            <%= @project_evals.length %>
           </p>
         </div>
       </div>
-      <%= render partial: "partials/evaluations/show", locals: {evaluations: all_course_project_evals(@project)} %>
+      <% if current_user.instructor %>
+        <h3>Project Evaluations</h3>
+      <% else %>
+        <h3>Project Evaluations for My Team</h3>
+      <% end %>
+      <% if current_user.instructor %>
+        <%= render partial: "partials/evaluations/show", locals: {evaluations: all_course_project_evals(@project), can_edit: false} %>
+      <% else %>
+        <% # Uses assumption 1 team per user per course %>
+        <%= render partial: "partials/evaluations/show", locals: {evaluations: all_course_project_team_evals(@team, @project), can_edit: false} %>
+      <% end %>
     </div>
   </div>
 <% end %>

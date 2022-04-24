@@ -22,5 +22,15 @@
         <% end %>
       <% end %>
     </div>
+    <% if current_user.courses.empty? %>
+      <% if current_user.instructor %>
+        <p class="text-lg">Create a course using the plus button near the top right!<p>
+      <% else %>
+        <p class="text-lg">You haven't been added to any courses. Request to be added by your instructor.<p>
+      <% end %>
+      <div class="flex justify-center w-full">
+        <%= image_tag("nature.svg", class: "w-full max-w-lg h-auto self-center", alt: "Hiking") %>
+      </div>
+    <% end %>
   </div>
 <% end %>

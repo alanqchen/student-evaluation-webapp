@@ -1,0 +1,16 @@
+<%= render layout: "partials/dashboard", locals: { active: "Evaluations" } do %>
+  <div class="mx-auto md:w-2/3 w-full flex flex-col">
+    <h2>Evaluations to Complete</h2>
+    <% unless @evals.nil? || @evals.empty? %>
+      <div class="mx-auto w-full">
+        <%= render partial: "partials/evaluations/show", locals: {evaluations: @evals, can_edit: true} %>
+        <p class="text-sm">View completed evaluation results in the courses page</p>
+      </div>
+    <% else %>
+      <p class="text-lg">There's no evaluations to complete! Time to rest.<p>
+      <div class="flex justify-center w-full">
+        <%= image_tag("nature.svg", class: "w-full max-w-lg h-auto self-center", alt: "Hiking") %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

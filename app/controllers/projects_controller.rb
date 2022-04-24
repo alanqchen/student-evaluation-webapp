@@ -1,10 +1,19 @@
 class ProjectsController < ApplicationController
   before_action :logged_in_user
-  before_action :valid_project_and_user, only: [:show, :edit, :update, :destroy]
+  before_action :valid_project, only: [:show, :edit, :update, :destroy]
+  before_action :user_in_course, only: [:show, :edit, :update, :destroy]
+  before_action :instructor_only, only: [:edit, :update, :destroy]
 
   def show
     @course = Course.find_by id: params[:id]
     @project = Project.find_by id: params[:pid]
+    unless current_user.instructor
+      # Assumes 1 team per user per courses
+      @team = course_teams_with_user(@course, current_user)[0]
+      @project_evals = all_course_project_team_evals @team, @project
+    else
+      @project_evals = all_course_project_evals @project
+    end
   end
 
   def create
@@ -86,13 +95,25 @@ class ProjectsController < ApplicationController
       end
     end
 
-    def valid_project_and_user
+    def valid_project
       @course = Course.find_by id: params[:id]
       @project = Project.find_by id: params[:pid]
       if !@course || !current_user.courses.include?(@course)
         redirect_to courses_path
       elsif !@project || !@course.projects.include?(@project)
         redirect_to course_path(@course.id)
+      end
+    end
+
+    def user_in_course
+      if !current_user.courses.include? @course
+        redirect_to courses_path
+      end
+    end
+
+    def instructor_only
+      unless current_user.instructor
+        redirect_to course_path(@course)
       end
     end
 end
