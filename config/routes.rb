@@ -25,9 +25,10 @@ Rails.application.routes.draw do
   # TEAMS
   get '/user/:uid/teams', to: 'teams#show_users_teams'
   get '/user/:uid/team/:tid', to: 'teams#show_user_team'
-  delete '/teams/:id', to: 'teams#destroy'
+  delete '/teams/:id', to: 'teams#destroy', as: 'destroy_team'
   post '/teams', to: 'teams#create'
-  post '/teams/:id/edit', to: 'teams#edit_team'
+  get '/teams/:id/edit', to: 'teams#edit_team', as: 'edit_team'
+  post '/teams/:id/edit', to: 'teams#update_team', as: 'update_team'
   # DASHBOARD
   get '/dashboard', to: 'dashboards#index'
   get '/dashboard/settings', to: 'dashboards#edit'

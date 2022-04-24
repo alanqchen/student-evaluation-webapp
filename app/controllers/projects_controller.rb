@@ -53,13 +53,19 @@ class ProjectsController < ApplicationController
     @project = Project.find params[:pid]
     render turbo_stream: [
       turbo_stream.replace("modal", template: "projects/edit"),
-      turbo_stream.update("dashboardTop", template: "projects/show")
     ]
   end
 
   def update
     @course = Course.find_by id: params[:id]
     @project = Project.find params[:pid]
+    unless current_user.instructor
+      # Assumes 1 team per user per courses
+      @team = course_teams_with_user(@course, current_user)[0]
+      @project_evals = all_course_project_team_evals @team, @project
+    else
+      @project_evals = all_course_project_evals @project
+    end
     if @project.update name: params[:project][:name], closed: params[:project][:active] != '1'
       flash[:success] = {title: 'Success!', message: " Updated #{@project.name}"}
       render turbo_stream: [

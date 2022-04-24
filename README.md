@@ -177,6 +177,7 @@ And other notes:
 
 - Most links in the footer are for decoration only at this point and don't go to anywhere, and same with the "About" link in the navbar
 - Sometimes activation links and other e-mails can break because of url-defense, try using the default accounts if you have trouble with e-mails not sending or the links not working
+- The active states of courses and projects are purely for visual effect and for searching in the tables
 
 ### Controller Work
 

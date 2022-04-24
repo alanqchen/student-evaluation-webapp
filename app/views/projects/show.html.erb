@@ -29,9 +29,13 @@
         <div>
           <h3>Completed Evaluations</h3>
           <p class="text-2xl">
-            <%= @project_evals.count{|e| e.completed} %>
-            <span class="font-extralight">/</span>
-            <%= @project_evals.length %>
+            <% unless @project_evals.nil? || @project_evals.empty? %>
+              <%= @project_evals.count{|e| e.completed} %>
+              <span class="font-extralight">/</span>
+              <%= @project_evals.length %>
+            <% else %>
+              N/A
+            <% end %>
           </p>
         </div>
       </div>
